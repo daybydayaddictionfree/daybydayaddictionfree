@@ -3,8 +3,9 @@
  *
  * Visit this repo for more information:
  *   https://github.com/reactorcore/eslint-config-hackreactor
+ *  extends: './node_modules/eslint-config-hackreactor/index.js'
  */
 
 module.exports = {
-  extends: './node_modules/eslint-config-hackreactor/index.js'
+  "extends": "airbnb",
 };

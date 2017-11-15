@@ -1,3 +1,6 @@
+
+DROP TABLE IF EXISTS `smokers`;
+
 CREATE TABLE smokers (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -9,6 +12,8 @@ CREATE TABLE smokers (
   PRIMARY KEY (`id`)
 )
 
+DROP TABLE IF EXISTS `smokers`;
+
 CREATE TABLE friends (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -17,4 +22,17 @@ CREATE TABLE friends (
   PRIMARY KEY (`id`)
 )
 
+DROP TABLE IF EXISTS `smokers`;
+
+CREATE TABLE messages (
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  'text' VARCHAR(15) NULL DEFAULT NULL,
+  'timestamp' VARCHAR(15) NULL DEFAULT NULL,
+  'id_smokers' INTEGER NOT NULL
+  'id_friends' INTEGER NOT NULL
+)
+
+
 ALTER TABLE `friends` ADD FOREIGN KEY (id_smokers) REFERENCES `smokers` (`id`);
+ALTER TABLE `messages` ADD FOREIGN KEY (id_smokers) REFERENCES `smokers` (`id`);
+ALTER TABLE `messages` ADD FOREIGN KEY (id_friends) REFERENCES `friends` (`id`);

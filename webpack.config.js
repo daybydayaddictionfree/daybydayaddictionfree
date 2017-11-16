@@ -9,11 +9,6 @@ module.exports = {
     filename: 'bundle.js',
     path: DIST_DIR,
   },
-  devServer: {
-    inline: true,
-    contentBase: './client/dist',
-    port: 8100,
-  },
   module: {
     loaders: [
       {

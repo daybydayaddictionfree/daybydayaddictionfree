@@ -60,3 +60,14 @@ table {
   padding-left: 30px;
   padding-right: 30px;
 }
+
+/*
+  ==============================
+  Custom Styles
+  ==============================
+*/
+
+body {
+  color: #888;
+  font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

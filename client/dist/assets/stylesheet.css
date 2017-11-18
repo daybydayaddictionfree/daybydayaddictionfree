@@ -65,9 +65,26 @@ table {
   ==============================
   Custom Styles
   ==============================
+  light aqua #c0dfd9
+  stone #e9ece5
+  concrete #b3c2bf
+  graphite #3b3a36
 */
 
 body {
   color: #888;
-  font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 300 16px/22px "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*
+  ==============================
+  Messages Styling
+  ==============================
+*/
+
+.message {
+  background-color: #e9ece5;
+  box-shadow: 10px 10px 5px #888888;
+  width: 66%;
+  margin: auto;
 }

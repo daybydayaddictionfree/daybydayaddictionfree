@@ -33,7 +33,6 @@ CREATE TABLE messages (
   id_friends INT
 )
 
-
 ALTER TABLE friends ADD FOREIGN KEY (id_smokers) REFERENCES smokers (id);
 ALTER TABLE messages ADD FOREIGN KEY (id_smokers) REFERENCES smokers (id);
 ALTER TABLE messages ADD FOREIGN KEY (id_friends) REFERENCES friends (id);

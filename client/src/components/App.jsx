@@ -1,12 +1,17 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import UserPage from './UserPage.jsx';
 
 const App = () => (
   <div>
-    <Route exact path="/" component={LandingPage} />
-    <Route exact path="/signup" component={SignupPage} />
-    <Route exact path="/user" component={UserPage} />
+    <nav>
+      <Link to="/user">UserPage</Link>
+    </nav>
+    <div>
+      <Route exact path="/" component={LandingPage} />
+      <Route exact path="/signup" component={SignupPage} />
+      <Route exact path="/user" component={UserPage} />
+    </div>
   </div>
 );
 

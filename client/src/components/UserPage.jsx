@@ -1,10 +1,10 @@
 import React from 'react';
 import MessageList from './MessageList.jsx'
+import messages from '../../../sampleData';
 
 const UserPage = () => (
   <div>
-    <h1>Future User Page</h1>
-    <MessageList />
+    <MessageList messages={messages} />
   </div>
 );
 

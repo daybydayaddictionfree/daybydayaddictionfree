@@ -1,10 +1,9 @@
 import React from 'react';
 import Message from './Message.jsx';
 
-const MessageList = () => (
+const MessageList = props => (
   <div>
-    <h1>Message List Here</h1>
-    <Message />
+    {props.messages.map(item => <Message message={item} key={item._id} />)}
   </div>
 );
 

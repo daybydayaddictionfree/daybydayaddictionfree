@@ -12,13 +12,14 @@ class ProgressBar extends React.component {
     };
   }
 
+  // call this or a similar function when database is updated
   progress(value) {
     this.setState({ completed: value });
   }
 
   render() {
     return (
-      <LinearProgress mode="determinate" value={this.state.completed} />
+      <LinearProgress mode="determinate" max="60" value={this.state.completed} />
     );
   }
 }

@@ -3,8 +3,6 @@ const path = require('path');
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
 
-console.log('DIST_DIR IS ', DIST_DIR);
-
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {

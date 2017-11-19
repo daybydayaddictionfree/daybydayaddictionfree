@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import UserPage from './UserPage.jsx';
+import Login from './Login.jsx';
 
 const App = () => (
   <div>
@@ -8,6 +9,7 @@ const App = () => (
       <Link to="/" style={{ margin: '5px' }} >LandingPage</Link>
       <Link to="/signup" style={{ margin: '5px' }} >SigupPage</Link>
       <Link to="/user" style={{ margin: '5px' }} >UserPage</Link>
+      <Login />
     </nav>
     <div>
       <Route exact path="/" component={LandingPage} />

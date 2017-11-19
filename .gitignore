@@ -29,3 +29,6 @@ bower_components/
 
 # Exclude this file
 client/dist/bundle.js
+
+#exclude this directory
+keysAndIds/

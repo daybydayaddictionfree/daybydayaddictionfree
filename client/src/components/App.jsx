@@ -5,7 +5,9 @@ import UserPage from './UserPage.jsx';
 const App = () => (
   <div>
     <nav>
-      <Link to="/user">UserPage</Link>
+      <Link to="/" style={{ margin: '5px' }} >LandingPage</Link>
+      <Link to="/signup" style={{ margin: '5px' }} >SigupPage</Link>
+      <Link to="/user" style={{ margin: '5px' }} >UserPage</Link>
     </nav>
     <div>
       <Route exact path="/" component={LandingPage} />

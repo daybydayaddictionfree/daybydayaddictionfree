@@ -1,21 +1,20 @@
-const { Pool, Client } = require('pg');
+const { Client } = require('pg');
 const db = require('../keysAndIds/db.js');
 
-const pool = new Pool({
+const client = new Client({
   connectionString: db.connectionString,
+  ssl: true,
 });
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res);
-  pool.end();
-});
+client.connect()
+  .then(() => console.log('Connected to postgresql database!'))
+  .catch(e => console.log('connection error: ', e));
 
-const client = new Client();
-
-client.connect();
+client.query('DROP TABLE smokers')
+client.query('CREATE TABLE smokers (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), phone VARCHAR(15) UNIQUE, email VARCHAR(15), timezone VARCHAR(15), progress INT(15), reminder VARCHAR(15)');
 
 module.exports = {
-  query: (text, params, callback) =>
-    pool.query(text, params, callback),
+  query: (text, params) =>
+    client.query(text, params),
 };
 

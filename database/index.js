@@ -1,15 +1,21 @@
-const { Client } = require('pg');
+const { Pool, Client } = require('pg');
+const db = require('../keysAndIds/db.js');
+
+const pool = new Pool({
+  connectionString: db.connectionString,
+});
+
+pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res);
+  pool.end();
+});
 
 const client = new Client();
 
 client.connect();
 
-// connecting with heroku
-// const connection = 'postgres://jasonborer:Metro123@localhost/node_hero';
-
-pg.connect(connection, (err, client, done) => {
-  if (err) {
-    return console.error('error fetching database');
-  } 
-});
+module.exports = {
+  query: (text, params, callback) =>
+    pool.query(text, params, callback),
+};
 

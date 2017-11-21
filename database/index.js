@@ -21,7 +21,7 @@ client.query('DROP TABLE messages');
 client.query('CREATE TABLE IF NOT EXISTS messages (id serial not null primary key, text varchar(64), timestamp varchar (25), id_smokers int, id_friends int)');
 
 module.exports = {
+  client,
   query: (text, params) =>
     client.query(text, params),
-  client,
 };

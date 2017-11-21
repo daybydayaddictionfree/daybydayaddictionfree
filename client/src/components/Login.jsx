@@ -2,9 +2,6 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import GoogleId from '../../../keysAndIds/GoogleId.js';
 
-const responseGoogle = (response) => {
-  console.log(response);
-};
 
 const Login = props => (
   <GoogleLogin

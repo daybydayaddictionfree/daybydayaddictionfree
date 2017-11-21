@@ -18,15 +18,34 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
-  // console.log(req.universalCookies.get('dbd-session-cookie'));
+  // check database if cookie is valid
+    // get smokers info from database
+    // send back smokers info
+
+  console.log(req.universalCookies.get('dbd-session-cookie'));
+  // send back user info
   res.send('WE CHECK COOKIE VS DATABASE');
 });
 
 app.get('/login', cookiesMiddleWare(), (req, res) => {
+  // check if new user or existing smoker
+    // if existing user 
+      // store cookie
+      // get smoker info from database
+    // if not
+      // redirect to signup page   
   console.log('Serving request type ', req.method, ' from ', req.path);
   // console.log(req.universalCookies.get('dbd-session-cookie'));
+  // send smoker info back if present or 'false' if not
   res.send('WE SHOULD ADD COOKIE TO DATABASE');
 });
+
+// post request for signup
+  // check if existing user
+    // if existing user 
+      // get their info from database and redirect to user home page
+    // if new user
+      // add info and cookie to database    
 
 app.get('/logout', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);

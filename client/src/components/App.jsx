@@ -1,8 +1,12 @@
 import React from 'react';
+import axios from 'axios';
 import { Link, Route, Redirect, Switch } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import HomePage from './HomePage.jsx';
 import Login from './Login.jsx';
 import messages from '../../../sampleData';
+
+const cookies = new Cookies();
 
 class App extends React.Component {
   constructor() {
@@ -15,11 +19,38 @@ class App extends React.Component {
     this.responseGoogle = this.responseGoogle.bind(this);
     this.logState = this.logState.bind(this);
     this.homePage = this.homePage.bind(this);
+    this.checkCookies = this.checkCookies.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkCookies();
+  }
+
+  checkCookies() {
+    if (cookies.get('dbd-session-cookie')) {
+      axios.get('/login')
+        .then((response) => {
+          console.log(response);
+          this.setState({
+            loggedIn: true,
+          });
+        });
+    }
+  }
+
+  logout() {
+    this.setState({
+      loggedIn: false
+    });
   }
 
   responseGoogle(response) {
     console.log(response);
     console.log('in response function');
+    cookies.set('dbd-session-cookie', response.tokenId);
+
+    // Need to add axios.get request here to ('/login')
 
     this.setState({
       loggedIn: true,
@@ -35,7 +66,7 @@ class App extends React.Component {
 
   homePage() {
     return (
-      <HomePage messages={messages} userState={this.state} />
+      <HomePage messages={messages} userState={this.state} cookies={cookies} logout={this.logout} />
     )
   }
 
@@ -44,13 +75,13 @@ class App extends React.Component {
       return (
         <div>
           <nav>
-            <Link to="/" style={{ margin: '5px' }} >LandingPage</Link>
+            <Link to="/landing" style={{ margin: '5px' }} >LandingPage</Link>
             <Link to="/signup" style={{ margin: '5px' }} >SigupPage</Link>
             <Login responseGoogle={this.responseGoogle} />
           </nav>
           <div>
             <Switch>
-              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/landing" component={LandingPage} />
               <Route exact path="/signup" component={SignupPage} />
             </Switch>
           </div>
@@ -62,7 +93,7 @@ class App extends React.Component {
         <button onClick={this.logState} >Click to console log user credentials</button>
         <Switch>
           <Route exact path="/home" render={this.homePage} />
-          <Redirect to='/home' />
+          <Redirect to="/home" />
         </Switch>
       </div>
     )

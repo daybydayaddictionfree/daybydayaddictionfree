@@ -29,7 +29,7 @@ class App extends React.Component {
 
   checkCookies() {
     if (cookies.get('dbd-session-cookie')) {
-      axios.get('/login')
+      axios.get('/verifyAuth')
         .then((response) => {
           console.log(response);
           this.setState({
@@ -45,18 +45,21 @@ class App extends React.Component {
     });
   }
 
-  responseGoogle(response) {
-    console.log(response);
+  responseGoogle(googleResponse) {
+    console.log(googleResponse);
     console.log('in response function');
-    cookies.set('dbd-session-cookie', response.tokenId);
+    cookies.set('dbd-session-cookie', googleResponse.tokenId);
 
     // Need to add axios.get request here to ('/login')
-
-    this.setState({
-      loggedIn: true,
-      profileObj: response.profileObj,
-      tokenId: response.tokenId,
-    });
+    axios.get('/login')
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loggedIn: true,
+          profileObj: googleResponse.profileObj,
+          tokenId: googleResponse.tokenId,
+        });
+      });
   }
 
   logState() {
@@ -83,6 +86,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/landing" component={LandingPage} />
               <Route exact path="/signup" component={SignupPage} />
+              <Redirect to="/" />
             </Switch>
           </div>
         </div>

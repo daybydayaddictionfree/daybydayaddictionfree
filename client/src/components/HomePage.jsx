@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import MessageList from './MessageList.jsx'
 import ProgressBar from './ProgressBar.jsx';
@@ -23,7 +22,7 @@ const HomePage = (props) => {
       <GoogleLogout
         buttonText="Logout"
         onLogoutSuccess={logout}
-        />
+      />
       <h1 style={{ textAlign: 'center' }} >{props.userState.profileObj.givenName} {props.userState.profileObj.familyName}</h1>
       <ProgressBar />
       <MessageList messages={props.messages} />

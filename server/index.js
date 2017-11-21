@@ -7,10 +7,16 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
+  console.log('Serving request type ', req.method, ' from ', req.path);
+  // console.log(req.universalCookies.get('dbd-session-cookie'));
+  res.send('WE CHECK COOKIE VS DATABASE');
+});
+
 app.get('/login', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
   // console.log(req.universalCookies.get('dbd-session-cookie'));
-  res.send('WE SHOULD ADD NEW COOKIE TO DATABASE');
+  res.send('WE SHOULD ADD COOKIE TO DATABASE');
 });
 
 app.get('/logout', cookiesMiddleWare(), (req, res) => {

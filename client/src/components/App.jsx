@@ -34,6 +34,7 @@ class App extends React.Component {
         .then((response) => {
           console.log(response);
           this.setState({
+            // update progress, messages, etc
             loggedIn: true,
           });
         });
@@ -49,13 +50,13 @@ class App extends React.Component {
   responseGoogle(googleResponse) {
     console.log(googleResponse);
     console.log('in response function');
-    cookies.set('dbd-session-cookie', googleResponse.tokenId);
-
+    cookies.set('dbd-session-cookie', googleResponse.tokenId); 
     // Need to add axios.get request here to ('/login')
-    axios.get('/login')
+    axios.post('/login', googleResponse)
       .then((response) => {
         console.log(response);
         this.setState({
+          // update progress, messages, etc
           loggedIn: true,
           profileObj: googleResponse.profileObj,
           tokenId: googleResponse.tokenId,

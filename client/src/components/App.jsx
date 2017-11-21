@@ -2,9 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { Link, Route, Redirect, Switch } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import HomePage from './HomePage.jsx';
-import Login from './Login.jsx';
+import HomePage from './HomePage';
+import Login from './Login';
 import messages from '../../../sampleData';
+import SignUp from './SignUp';
 
 const cookies = new Cookies();
 
@@ -41,7 +42,7 @@ class App extends React.Component {
 
   logout() {
     this.setState({
-      loggedIn: false
+      loggedIn: false,
     });
   }
 
@@ -105,6 +106,6 @@ class App extends React.Component {
 }
 
 const LandingPage = () => <h1>Future Landing Page</h1>;
-const SignupPage = () => <h1>Future Signup Page</h1>;
+const SignupPage = () => <SignUp />;
 
 export default App;

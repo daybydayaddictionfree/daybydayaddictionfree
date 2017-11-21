@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const { client, query } = require('./index.js');
+const q = require('./queries');
 
 // Seed table with dummy data
 const seedDatabase = () => {
@@ -13,8 +14,10 @@ const seedDatabase = () => {
 // Test to see if data is posting
 Promise.resolve(seedDatabase())
   .then(() => {
-    client.query('SELECT * from smokers')
+    // client.query('SELECT * from smokers')
+    q.retrieveUser({ email: 'abe@gmail.com' })
       .then((result) => {
         console.log(result.rows);
       });
   });
+

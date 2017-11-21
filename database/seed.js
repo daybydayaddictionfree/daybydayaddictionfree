@@ -10,7 +10,7 @@ const seedDatabase = () => {
   query('INSERT INTO messages(text, timestamp, id_smokers, id_friends) VALUES ($1, $2, $3, $4)', ['Goodjob sweetie!!!', '11/18/2017', 1, 1]);
 };
 
-// test to see if data is posting
+// Test to see if data is posting
 Promise.resolve(seedDatabase())
   .then(() => {
     client.query('SELECT * from smokers')

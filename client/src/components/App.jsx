@@ -4,7 +4,9 @@ import { Link, Route, Redirect, Switch } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import HomePage from './HomePage.jsx';
 import Login from './Login.jsx';
+import SignUp from './signUp.jsx';
 import messages from '../../../sampleData';
+
 
 const cookies = new Cookies();
 
@@ -105,6 +107,6 @@ class App extends React.Component {
 }
 
 const LandingPage = () => <h1>Future Landing Page</h1>;
-const SignupPage = () => <h1>Future Signup Page</h1>;
+const SignupPage = () => <SignUp/>;
 
 export default App;

@@ -5,6 +5,8 @@ const session = require('express-session');
 const port = 8080;
 const app = express();
 
+const id = 'bruce wayne';
+
 console.log(__dirname);
 app.use(session({
   secret: 'dbdsecretstring123!',

@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
-const db = require('../database/index.js');
+// Seeds table with dummy data, comment out when use real data
+const seed = require('../database/seed.js');
+// Uncomment the following line when are done with seed data:
+// const db = require('../database/index.js');
 
 const port = 8080;
 const app = express();

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import UserPage from './UserPage.jsx';
 import Login from './Login.jsx';
+import SignUp from './signUp.jsx';
 
 const App = () => (
   <div>
@@ -20,6 +21,6 @@ const App = () => (
 );
 
 const LandingPage = () => <h1>Future Landing Page</h1>;
-const SignupPage = () => <h1>Future Signup Page</h1>;
+const SignupPage = () => <SignUp/>;
 
 export default App;

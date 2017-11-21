@@ -19,6 +19,14 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
 });
 
 app.get('/login', cookiesMiddleWare(), (req, res) => {
+  // recieve user info and check if user is in database by email
+  // check if cookie is in database
+    // if yes get their info from email and log them in
+    // if yes - log them in and send them to user page
+    // if no - send them to signup with their data
+    // click signup
+    // check if phone numbers are unique
+      // add info from form to database
   console.log('Serving request type ', req.method, ' from ', req.path);
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   res.send('WE SHOULD ADD COOKIE TO DATABASE');
@@ -34,6 +42,12 @@ app.get('*', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
+});
+app.post('/admin', cookiesMiddleWare(), (req, res) => {
+  // check cookie and admin status
+  // set all responded values to false
+    // if true 
+      // run fcn   
 });
 
 app.listen(port);

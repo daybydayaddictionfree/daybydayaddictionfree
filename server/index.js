@@ -1,6 +1,9 @@
 const cookiesMiddleWare = require('universal-cookie-express');
 const express = require('express');
 const path = require('path');
+const parser = require('body-parser');
+let twilio = require('twilio');
+let twillioSend = require('../twillio/index');
 
 // Seeds table with dummy data, comment out when use real data
 const seed = require('../database/seed.js');
@@ -10,6 +13,7 @@ const seed = require('../database/seed.js');
 const port = 8080;
 const app = express();
 
+app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
@@ -19,14 +23,6 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
 });
 
 app.get('/login', cookiesMiddleWare(), (req, res) => {
-  // recieve user info and check if user is in database by email
-  // check if cookie is in database
-    // if yes get their info from email and log them in
-    // if yes - log them in and send them to user page
-    // if no - send them to signup with their data
-    // click signup
-    // check if phone numbers are unique
-      // add info from form to database
   console.log('Serving request type ', req.method, ' from ', req.path);
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   res.send('WE SHOULD ADD COOKIE TO DATABASE');
@@ -48,6 +44,15 @@ app.post('/admin', cookiesMiddleWare(), (req, res) => {
   // set all responded values to false
     // if true 
       // run fcn   
+});
+
+app.post('/sms', function(req, res) {
+  console.log(req.body.Body);
+  // twilio = require('twilio');
+  let twiml = new twilio.twiml.MessagingResponse();
+  twiml.message('The Robots are coming! Head for the hills!');
+  res.writeHead(200, { 'Content-Type': 'text/xml' });
+  res.end('');
 });
 
 app.listen(port);

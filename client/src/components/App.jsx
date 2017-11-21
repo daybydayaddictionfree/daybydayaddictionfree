@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import HomePage from './HomePage';
 import Login from './Login';
 import messages from '../../../sampleData';
+import SignUp from './SignUp';
 
 const cookies = new Cookies();
 
@@ -105,6 +106,6 @@ class App extends React.Component {
 }
 
 const LandingPage = () => <h1>Future Landing Page</h1>;
-const SignupPage = () => <h1>Future Signup Page</h1>;
+const SignupPage = () => <SignUp />;
 
 export default App;

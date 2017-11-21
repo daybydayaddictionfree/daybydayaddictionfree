@@ -11,11 +11,14 @@ client.connect()
   .catch(e => console.log('connection error: ', e));
 
 client.query('DROP TABLE smokers');
-client.query('CREATE TABLE IF NOT EXISTS smokers(id serial not null primary key, name varchar(64), phone VARCHAR(15) UNIQUE, mail VARCHAR(64), timezone VARCHAR(15), progress int, reminder VARCHAR(15) )');
+client.query('CREATE TABLE IF NOT EXISTS smokers(id serial not null primary key, name varchar(64), phone VARCHAR(15) UNIQUE, email VARCHAR(64), timezone VARCHAR(15), progress int, reminder VARCHAR(15) )');
 
+client.query('INSERT INTO smokers (name, phone, email, progress) VALUES ($1, $2, $3, $4)', ['Abraham Lincoln', '555-555-5555', 'abe@gmail.com', 0]);
 
-
-// , e, timezone VARCHAR(15), progress INT(15), reminder VARCHAR(15))');
+client.query('SELECT * from smokers')
+  .then((result) => {
+    console.log(result.rows);
+  });
 
 module.exports = {
   query: (text, params) =>

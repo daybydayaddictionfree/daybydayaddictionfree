@@ -15,8 +15,9 @@ const retrieveUserInfo = (email =>
 const checkCookie = (token =>
   query('SELECT email FROM cookies WHERE token=$1', [token]));
 
-const insertCookie = (({ token, email, id }) =>
-  query('INSERT INTO cookies(token, email, id_smokers) VALUES ($1, $2, $3)', [token, email, id]));
+const insertCookie = (({ token, email, id }) => {
+  console.log(token)
+  query('INSERT INTO cookies(token, email, id_smokers) VALUES ($1, $2, $3)', [token, email, id])});
 
 module.exports.insertSmoker = insertSmoker;
 module.exports.insertFriends = insertFriends;

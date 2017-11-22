@@ -17,6 +17,7 @@ class App extends React.Component {
       profileObj: {},
       tokenId: '',
       signIn: false,
+      messages: [],
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -83,8 +84,10 @@ class App extends React.Component {
           if(response.data === false) {
 
           } else {
+            console.log('DATA BACK HOME', response.data)
             this.setState({
               // update progress, messages, etc
+              messages: response.data.messages,
               loggedIn: true,
             });
           }
@@ -99,7 +102,7 @@ class App extends React.Component {
 
   homePage() {
     return (
-      <HomePage messages={messages} userState={this.state} cookies={cookies} logout={this.logout} />
+      <HomePage messages={this.state.messages} userState={this.state} cookies={cookies} logout={this.logout} />
     )
   }
 

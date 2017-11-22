@@ -26,16 +26,15 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
     .then(({ rows } ) => {
       //  if cookie is valied get smokers info from database
-      console.log('Rows In VERIFY', rows[0]);
+    
       if (rows.length > 0) {
         q.retrieveUserInfo(rows[0].id_smokers)
           .then(({ rows }) => {
             const userData = rows[0];
-            console.log('New Rows', rows)
+          
             q.retrieveMessages(rows[0].id)
               .then(( {rows} ) => {
-                console.log('ROWS msgs' , rows);
-      
+              
                 userData.messages = rows;  
                 
                 res.send(userData);

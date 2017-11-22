@@ -7,15 +7,17 @@
     <script src="node_modules/lodash/lodash.js"></script>
     <script src="node_modules/mocha/mocha.js"></script>
     <script src="node_modules/chai/chai.js"></script>
-    <script src="node_modules/react-dom/test-utils.js"></script>
     <script>
-      const dotenv=require('dotenv');
+      const process = {};
+      process.env = { NODE_ENV: 'development' };
+      console.log('process', process);
       mocha.setup('bdd');
       let expect = chai.expect
-      $(() => {
+      $(function() {
         window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run()
       });
     </script>
+    <script src="node_modules/react-dom/cjs/react-dom-test-utils.development.js"></script>
 
     <!-- source files here -->
     <script src="compiled/client/src/components/App.js"></script>
@@ -25,6 +27,5 @@
   </head>
   <body>
     <div id="mocha"></div>
-    <h1>Mocha Tests Here</h1>
   </body>
 </html>

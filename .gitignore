@@ -31,5 +31,7 @@ bower_components/
 client/dist/bundle.js
 .env
 
-#exclude this directory
+#exclude these directories directory
 keysAndIds/
+compiled/
+__tests__/

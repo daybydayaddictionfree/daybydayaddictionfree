@@ -45,7 +45,6 @@ class App extends React.Component {
     cookies.set('dbd-session-cookie', googleResponse.tokenId);
     axios.post('/login', googleResponse.profileObj)
      .then((response) => {
-      console.log('RESONSE IN LOGIN POST', response);
       this.setState({
         profileObj: googleResponse.profileObj,
         tokenId: googleResponse.tokenId,
@@ -62,8 +61,6 @@ class App extends React.Component {
   }
   
   onClickSignUpSmoker(user) {
-    console.log('USER in CLICK SMOKER', user);
-    console.log('THIS>STATE',this.state)
     const userInfo = Object.assign(user, this.state.profileObj);
     axios.post('/signup', userInfo)
     .then((response) => {

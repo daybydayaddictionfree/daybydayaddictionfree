@@ -4,6 +4,7 @@ const path = require('path');
 const parser = require('body-parser');
 let twilio = require('twilio');
 let twillioSend = require('../twillio/index');
+const q = require('../database/queries');
 
 // Seeds table with dummy data, comment out when use real data
 const seed = require('../database/seed.js');
@@ -13,31 +14,50 @@ const seed = require('../database/seed.js');
 const port = 8080;
 const app = express();
 
-app.use(parser.urlencoded({ extended: true }));
+app.use(parser.json());
+// app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
   // check database if cookie is valid
-    // get smokers info from database
-    // send back smokers info
-
-  console.log(req.universalCookies.get('dbd-session-cookie'));
+  q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
+    .then(({ rows }) => {
+      console.log('FIRST RESULT', rows);
+      //  if cookie is valied get smokers info from database
+      if (rows.length > 0) {
+        q.retriveUserInfo(rows.email)
+          .then((result) => {
+            console.log(result);
+          });
+      }
+    });
+  // console.log(req.universalCookies.get('dbd-session-cookie'));
   // send back user info
   res.send('WE CHECK COOKIE VS DATABASE');
 });
 
-app.get('/login', cookiesMiddleWare(), (req, res) => {
-  // check if new user or existing smoker
-    // if existing user 
-      // store cookie
-      // get smoker info from database
-    // if not
-      // redirect to signup page   
+app.post('/login', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
+  console.log('Req.body In /login', req.body);
+  // check if new user or existing smoker
+  // get smoker info from database
+  q.retrieveUserInfo(req.body.email)
+  // if existing user
+    .then(({ rows }) => {
+      if (rows > 0) {
+        // store cookie
+        q.storeCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows.email, idSmokers: rows.id });
+        res.send(rows);
+        // if not
+      } else {
+        // redirect to signup page   
+        res.send(false);
+      }
+    });
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   // send smoker info back if present or 'false' if not
-  res.send('WE SHOULD ADD COOKIE TO DATABASE');
+  // res.send('WE SHOULD ADD COOKIE TO DATABASE');
 });
 
 // post request for signup

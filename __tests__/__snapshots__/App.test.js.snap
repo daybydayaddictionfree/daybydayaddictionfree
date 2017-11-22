@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> should render the App component  1`] = `
+<div>
+  <nav>
+    <Link
+      replace={false}
+      style={
+        Object {
+          "margin": "5px",
+        }
+      }
+      to="/landing"
+    >
+      LandingPage
+    </Link>
+    <Link
+      replace={false}
+      style={
+        Object {
+          "margin": "5px",
+        }
+      }
+      to="/signup"
+    >
+      SigupPage
+    </Link>
+    <Login
+      responseGoogle={[Function]}
+    />
+  </nav>
+  <div>
+    <Switch>
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/landing"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/signup"
+      />
+      <Redirect
+        push={false}
+        to="/landing"
+      />
+    </Switch>
+  </div>
+</div>
+`;
+
+exports[`<HomePage /> should render the HomePage component  1`] = `
+<div>
+  <t
+    buttonText="Logout"
+    disabledStyle={
+      Object {
+        "opacity": 0.6,
+      }
+    }
+    onLogoutSuccess={[Function]}
+    onRequest={[Function]}
+    responseType="permission"
+    tag="button"
+  />
+  <h1
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    Brian
+     
+    Choe
+  </h1>
+  <ProgressBar />
+  <MessageList />
+</div>
+`;
+
+exports[`<Login /> should render the Login component  1`] = `
+<t
+  buttonText="Login using Google"
+  clientId="661794075574-q87lqva7vp50d04qv7h4dm95lhmvs3m3.apps.googleusercontent.com"
+  cookiePolicy="single_host_origin"
+  disabledStyle={
+    Object {
+      "opacity": 0.6,
+    }
+  }
+  fetchBasicProfile={true}
+  isSignedIn={false}
+  onRequest={[Function]}
+  prompt=""
+  scope="profile email"
+  tag="button"
+  type="button"
+  uxMode="popup"
+/>
+`;
+
+exports[`<Message /> should render the Message component  1`] = `
+<Card
+  expandable={false}
+  expanded={null}
+  initiallyExpanded={false}
+  style={
+    Object {
+      "margin": "5px auto",
+      "width": "66%",
+    }
+  }
+>
+  <CardHeader
+    avatar={null}
+    subtitle="datestring here"
+    title="Abraham Lincoln"
+  />
+  <CardText>
+    great work, keep it up!
+  </CardText>
+</Card>
+`;
+
+exports[`<MessageList /> should render the MessageList component  1`] = `
+<div>
+  <Message
+    key="1"
+    message={
+      Object {
+        "_id": 1,
+        "sender": "Abraham Lincoln",
+        "text": "great work, keep it up!",
+        "timeStamp": "datestring here",
+      }
+    }
+  />
+  <Message
+    key="2"
+    message={
+      Object {
+        "_id": 2,
+        "sender": "George Washington",
+        "text": "amazing!",
+        "timeStamp": "next datestring here",
+      }
+    }
+  />
+  <Message
+    key="3"
+    message={
+      Object {
+        "_id": 3,
+        "sender": "Barack Obama",
+        "text": "I believe in you",
+        "timeStamp": "3rd datestring here",
+      }
+    }
+  />
+  <Message
+    key="4"
+    message={
+      Object {
+        "_id": 4,
+        "sender": "Bill Clinton",
+        "text": "you can do it!",
+        "timeStamp": "datestring #4 here",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<ProgressBar /> should render the ProgressBar component  1`] = `
+<LinearProgress
+  max={60}
+  min={0}
+  mode="determinate"
+  style={
+    Object {
+      "margin": "5px auto",
+      "width": "66%",
+    }
+  }
+  value={30}
+/>
+`;

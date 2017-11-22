@@ -16,6 +16,7 @@ class App extends React.Component {
       loggedIn: false,
       profileObj: {},
       tokenId: '',
+      signIn: false,
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -49,8 +50,8 @@ class App extends React.Component {
         profileObj: googleResponse.profileObj,
         tokenId: googleResponse.tokenId,
       });
-      if (response === false) {
-        // redirect to signup
+      if (response.data === false) {
+        this.setState({ signIn: true });
       } else {
         this.setState({
           // update progress, messages, etc
@@ -60,19 +61,19 @@ class App extends React.Component {
     });
   }
   
-  // onClickSignUpSmoker(user) {
-  //   console.log('USER in CLICK SMOKER', user);
+  onClickSignUpSmoker(user) {
+    console.log('USER in CLICK SMOKER', user);
     
-  //   axios.post('/signup', user)
-  //   .then((response) => {
-  //     if (response === true) {
-  //       console.log('USER already exists')
-  //       // rerender signup
-  //     } else {
-  //       //redirect to home page
-  //     }
-  //   });
-  // }
+    axios.post('/signup', user)
+    .then((response) => {
+      if (response === true) {
+        console.log('USER already exists')
+        // rerender signup
+      } else {
+        //redirect to home page
+      }
+    });
+  }
   
   checkCookies() {
     if (cookies.get('dbd-session-cookie')) {
@@ -99,33 +100,44 @@ class App extends React.Component {
   }
 
   render() {
-    if (!this.state.loggedIn) {
-      return <div>
-          <nav>
-            <Link to="/landing" style={{ margin: "5px" }}>
-              LandingPage
-            </Link>
-           
-            <Login responseGoogle={this.responseGoogle} />
-          </nav>
-          <div>
-            <Switch>
-              <Route exact path="/landing" component={LandingPage} />
-              <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.state.profileObj} responseGoogle={this.responseGoogle} />} />
-              <Redirect to="/" />
-            </Switch>
-          </div>
-        </div>;
-    }
-    return (
+    if (this.state.loggedIn) {
+      return (     
       <div>
-        <button onClick={this.logState} >Click to console log user credentials</button>
+        <button onClick={this.logState}>
+          Click to console log user credentials
+        </button>
         <Switch>
           <Route exact path="/home" render={this.homePage} />
           <Redirect to="/home" />
         </Switch>
       </div>
-    )
+      );
+    } else if (this.state.signIn) {
+      console.log('SEND TO SIGNUP');
+      return <div>
+          <Switch>
+            <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.state.profileObj} responseGoogle={this.responseGoogle} />} />
+            <Redirect to="/signup" />
+          </Switch>
+        </div>;
+    }
+    return (
+    <div>
+        <nav>
+          <Link to="/landing" style={{ margin: "5px" }}>
+            LandingPage
+          </Link>
+
+          <Login responseGoogle={this.responseGoogle} />
+        </nav>
+        <div>
+          <Switch>
+            <Route exact path="/landing" component={LandingPage} />
+            <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.state.profileObj} responseGoogle={this.responseGoogle} />} />
+            <Redirect to="/" />
+          </Switch>
+        </div>
+    </div>);
   }
 }
 

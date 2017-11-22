@@ -39,33 +39,45 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
 
 app.post('/login', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
-  console.log('Req.body In /login', req.body);
   // check if new user or existing smoker
-  // get smoker info from database
   q.retrieveUserInfo(req.body.email)
-  // if existing user
     .then(({ rows }) => {
+      // if user is existing user
       if (rows > 0) {
         // store cookie
-        q.storeCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows.email, idSmokers: rows.id });
+        q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows.email, idSmokers: rows.id });
         res.send(rows);
-        // if not
+        // if new user
       } else {
-        // redirect to signup page   
+        // redirect to signup page
         res.send(false);
       }
     });
-  // console.log(req.universalCookies.get('dbd-session-cookie'));
-  // send smoker info back if present or 'false' if not
-  // res.send('WE SHOULD ADD COOKIE TO DATABASE');
 });
 
 // post request for signup
+app.post('/signup', cookiesMiddleWare(), (req, res) => {
   // check if existing user
-    // if existing user 
-      // get their info from database and redirect to user home page
-    // if new user
-      // add info and cookie to database    
+  // q.retrieveUserInfo(req.body.email)
+  //   .then(({ rows }) => {
+  //     // if user is existing user
+  //     if (rows > 0) {
+  //       res.send(rows);
+  //       // redirect to home page on client side
+  //     } else {
+  //       // if new user
+  //       // Add user info to database 
+  //       q.insertSmoker(['smokers info'])
+  //         .then((results) => {
+  //           // Add cookie to database
+  //           q.insertCookie('Cookie info')
+  //             .then((result) => {
+  //               res.send(result);
+  //             });
+  //         });
+  //     }
+  //   });
+});
 
 app.get('/logout', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);

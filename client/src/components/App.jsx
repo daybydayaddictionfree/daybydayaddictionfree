@@ -32,6 +32,18 @@ class App extends React.Component {
     this.checkCookies();
   }
 
+  onClickSignUpSmoker(user) {
+    const userInfo = Object.assign(user, this.state.profileObj);
+    axios.post('/signup', userInfo)
+      .then((response) => {
+        if (response === true) {
+          console.log('USER already exists');
+          // rerender signup
+        } else {
+          // redirect to home page
+        }
+      });
+  }
 
   logout() {
     this.setState({
@@ -41,47 +53,33 @@ class App extends React.Component {
 
   responseGoogle(googleResponse) {
     console.log('googleResponse', googleResponse);
-   
     cookies.set('dbd-session-cookie', googleResponse.tokenId);
     axios.post('/login', googleResponse.profileObj)
-     .then((response) => {
-      this.setState({
-        profileObj: googleResponse.profileObj,
-        tokenId: googleResponse.tokenId,
-      });
-      if (response.data === false) {
-        this.setState({ signIn: true });
-      } else {
+      .then((response) => {
         this.setState({
-          // update progress, messages, etc
-          loggedIn: true,
+          profileObj: googleResponse.profileObj,
+          tokenId: googleResponse.tokenId,
         });
-      }
-    });
+        if (response.data === false) {
+          this.setState({ signIn: true });
+        } else {
+          this.setState({
+            // update progress, messages, etc
+            loggedIn: true,
+          });
+        }
+      });
   }
-  
-  onClickSignUpSmoker(user) {
-    const userInfo = Object.assign(user, this.state.profileObj);
-    axios.post('/signup', userInfo)
-    .then((response) => {
-      if (response === true) {
-        console.log('USER already exists')
-        // rerender signup
-      } else {
-        //redirect to home page
-      }
-    });
-  }
-  
+
   checkCookies() {
     if (cookies.get('dbd-session-cookie')) {
       axios.get('/verifyAuth')
         .then((response) => {
           console.log('Response in verify Auth client', response);
-          if(response.data === false) {
+          if (response.data === false) {
 
           } else {
-            console.log('DATA BACK HOME', response.data)
+            console.log('DATA BACK HOME', response.data);
             this.setState({
               // update progress, messages, etc
               messages: response.data.messages,
@@ -100,33 +98,35 @@ class App extends React.Component {
   homePage() {
     return (
       <HomePage messages={this.state.messages} userState={this.state} cookies={cookies} logout={this.logout} />
-    )
+    );
   }
 
   render() {
     if (this.state.loggedIn) {
-      return (     
-      <div>
-        <button onClick={this.logState}>
-          Click to console log user credentials
-        </button>
-        <Switch>
-          <Route exact path="/home" render={this.homePage} />
-          <Redirect to="/home" />
-        </Switch>
-      </div>
+      return (
+        <div>
+          <button onClick={this.logState}>
+            Click to console log user credentials
+          </button>
+          <Switch>
+            <Route exact path="/home" render={this.homePage} />
+            <Redirect to="/home" />
+          </Switch>
+        </div>
       );
     } else if (this.state.signIn) {
       console.log('SEND TO SIGNUP');
-      return <div>
+      return (
+        <div>
           <Switch>
             <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.state.profileObj} responseGoogle={this.responseGoogle} />} />
             <Redirect to="/signup" />
           </Switch>
-        </div>;
+        </div>
+      );
     }
     return (
-    <div>
+      <div>
         <nav>
           <Link to="/landing" style={{ margin: "5px" }}>
             LandingPage
@@ -140,7 +140,8 @@ class App extends React.Component {
             <Redirect to="/" />
           </Switch>
         </div>
-    </div>);
+      </div>
+    );
   }
 }
 

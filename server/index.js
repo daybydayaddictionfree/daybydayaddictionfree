@@ -24,19 +24,16 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   // check database if cookie is valid
   // console.log("Token being checked", req.universalCookies.get("dbd-session-cookie"));
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
-    .then(({ rows } ) => {
+    .then(({ rows }) => {
       //  if cookie is valied get smokers info from database
-    
+
       if (rows.length > 0) {
         q.retrieveUserInfo(rows[0].id_smokers)
           .then(({ rows }) => {
-            const userData = rows[0];
-          
+            const userData = rows[0];      
             q.retrieveMessages(rows[0].id)
-              .then(( {rows} ) => {
-              
-                userData.messages = rows;  
-                
+              .then(( {rows} ) => {         
+                userData.messages = rows;
                 res.send(userData);
               });
             });
@@ -75,17 +72,17 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
       if (rows > 0) {
         // get messages
         q.retrieveMessages(rows.id)
-        .then((messages) => {
-          const userInfo = Object.assign(rows, messages);
-          res.send(messages);
-        });
+          .then((messages) => {
+            const userInfo = Object.assign(rows, messages);
+            res.send(messages);
+          });
         // send back messages and user info
         // redirect to home page on client side
       } else {
-        // Add user info to database 
+        // Add user info to database
         q.insertSmoker(req.body)
           .then((results) => {
-            const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie')} )
+            const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie') });
             const friendInfo = utils.friendify(req.body, results.rows[0].id);
 
             // add cookie and friends to database
@@ -104,6 +101,7 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
 
 app.get('/logout', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
+  // console.log(req.universalCookie.get('dbd-session-cookie'));
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   res.send('WE SHOULD REMOVE COOKIE FROM DATABASE');
 });

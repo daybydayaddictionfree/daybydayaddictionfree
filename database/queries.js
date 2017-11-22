@@ -1,12 +1,12 @@
 const format = require('pg-format');
 const { query } = require('./index');
 
-const insertSmoker = (({ name, userNum, email}) =>
-  query('INSERT INTO smokers (name, phone, email, progress) VALUES ($1, $2, $3, $4) RETURNING id, email', [name, userNum, email, 0]));
+const insertSmoker = (({ name, userNum, email }) =>
+  query('INSERT INTO smokers (name, phone, email, progress, responded) VALUES ($1, $2, $3, $4) RETURNING id, email', [name, userNum, email, 0, false]));
 
 const insertFriends = ((friends) => {
-  const sql = format('INSERT INTO friends(name, phone, id_smokers) VALUES %L', friends)
-  return query(sql)
+  const sql = format('INSERT INTO friends(name, phone, id_smokers) VALUES %L', friends);
+  return query(sql);
 });
 
 const insertMessage = (message =>
@@ -19,16 +19,15 @@ const checkCookie = (token =>
   query('SELECT id_smokers FROM cookies WHERE token=$1', [token]));
 
 const insertCookie = (({ token, email, id }) => 
-  query('INSERT INTO cookies(token, email, id_smokers) VALUES ($1, $2, $3)', [token,email, id]));
+  query('INSERT INTO cookies(token, email, id_smokers) VALUES ($1, $2, $3)', [token, email, id]));
 
 const retrieveUserInfo = (id =>
   query('SELECT * FROM smokers WHERE id=$1', [id]));
 
 const retrieveMessages = (id =>
-  query('SELECT * from messages INNER JOIN friends ON friends.id=messages.id_friends WHERE messages.id_smokers=$1',[id]));
+  query('SELECT * from messages INNER JOIN friends ON friends.id=messages.id_friends WHERE messages.id_smokers=$1', [id]));
 
-  
-    
+
 module.exports.insertSmoker = insertSmoker;
 module.exports.insertFriends = insertFriends;
 module.exports.insertMessage = insertMessage;

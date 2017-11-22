@@ -8,6 +8,7 @@ const HomePage = (props) => {
   const logout = () => {
     axios.get('/logout')
       .then(() => {
+        console.log('PROPS.COOKIES', props.cookies);
         props.cookies.remove('dbd-session-cookie');
       })
       .then(() => {

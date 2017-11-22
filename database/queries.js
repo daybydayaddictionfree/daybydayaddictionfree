@@ -19,13 +19,13 @@ const checkCookie = (token =>
   query('SELECT id_smokers FROM cookies WHERE token=$1', [token]));
 
 const insertCookie = (({ token, email, id }) => 
-  query('INSERT INTO cookies(token, email, id_smokers) VALUES ($1, $2, $3)', [token,email, id]));
+  query('INSERT INTO cookies(token, email, id_smokers) VALUES ($1, $2, $3)', [token, email, id]));
 
 const retrieveUserInfo = (id =>
   query('SELECT * FROM smokers WHERE id=$1', [id]));
 
 const retrieveMessages = (id =>
-  query('SELECT * from messages INNER JOIN friends ON friends.id=messages.id_friends WHERE messages.id_smokers=$1'[id]));
+  query('SELECT * from messages INNER JOIN friends ON friends.id=messages.id_friends WHERE messages.id_smokers=$1', [id]));
 
 
 module.exports.insertSmoker = insertSmoker;

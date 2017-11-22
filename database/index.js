@@ -20,6 +20,10 @@ client.query('CREATE TABLE IF NOT EXISTS friends(id serial not null primary key,
 client.query('DROP TABLE messages');
 client.query('CREATE TABLE IF NOT EXISTS messages (id serial not null primary key, text varchar(64), timestamp varchar (25), id_smokers int, id_friends int)');
 
+// client.query('DROP TABLE cookies');
+client.query('CREATE TABLE IF NOT EXISTS cookies (id serial not null primary key, token varchar(255), email VARCHAR(64) UNIQUE, id_smokers int)');
+
+
 module.exports = {
   client,
   query: (text, params) =>

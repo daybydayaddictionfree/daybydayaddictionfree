@@ -12,12 +12,12 @@ const seedDatabase = () => {
 };
 
 // Test to see if data is posting
-Promise.resolve(seedDatabase())
-  .then(() => {
-    // client.query('SELECT * from smokers')
-    q.retrieveUser({ email: 'abe@gmail.com' })
-      .then((result) => {
-        console.log(result.rows);
-      });
-  });
+// Promise.resolve(seedDatabase())
+//   .then(() => {
+//     // client.query('SELECT * from smokers')
+//     q.retrieveUserInfo({ email: 'abe@gmail.com' })
+//       .then((result) => {
+//         console.log(result.rows);
+//       });
+//   });
 

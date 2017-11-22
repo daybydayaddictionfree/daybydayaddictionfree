@@ -48,20 +48,25 @@ class App extends React.Component {
   }
 
   responseGoogle(googleResponse) {
-    console.log(googleResponse);
-    console.log('in response function');
-    cookies.set('dbd-session-cookie', googleResponse.tokenId); 
+    console.log('googleResponse', googleResponse);
+   
+    cookies.set('dbd-session-cookie', googleResponse.tokenId);
     // Need to add axios.get request here to ('/login')
-    axios.post('/login', googleResponse)
+    axios.post('/login', googleResponse.profileObj)
       .then((response) => {
-        console.log(response);
-        this.setState({
-          // update progress, messages, etc
-          loggedIn: true,
-          profileObj: googleResponse.profileObj,
-          tokenId: googleResponse.tokenId,
-        });
+        console.log('RESONSE IN LOGIN POST', response);
+        if (response === false) {
+          // redirect to signup
+        } else {
+          this.setState({
+            // update progress, messages, etc
+            loggedIn: true,
+            profileObj: googleResponse.profileObj,
+            tokenId: googleResponse.tokenId,
+          });
+        }
       });
+      }
   }
 
   logState() {

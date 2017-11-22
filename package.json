@@ -23,6 +23,7 @@
     "axios": "^0.17.1",
     "bluebird": "^3.5.1",
     "dotenv": "^4.0.0",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "material-ui": "^0.19.4",
@@ -35,10 +36,10 @@
     "react-google-login": "^3.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "universal-cookie": "^2.1.0",
-    "universal-cookie-express": "^2.1.0",
     "react-style-tag": "^1.4.1",
-    "twilio": "^3.10.0"
+    "twilio": "^3.10.0",
+    "universal-cookie": "^2.1.0",
+    "universal-cookie-express": "^2.1.0"
   },
   "devDependencies": {
     "axios": "^0.17.1",

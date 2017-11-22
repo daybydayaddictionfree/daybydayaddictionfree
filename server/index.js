@@ -26,17 +26,24 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
     .then(({ rows }) => {
       //  if cookie is valied get smokers info from database
-
+      console.log('HIT ONE');
+      
       if (rows.length > 0) {
         q.retrieveUserInfo(rows[0].id_smokers)
           .then(({ rows }) => {
+            console.log('HIT TWO');
+            console.log(rows[0].id);
             const userData = rows[0];      
             q.retrieveMessages(rows[0].id)
-              .then(( {rows} ) => {         
+              .then(( {rows} ) => {   
+                console.log('HIT THREE');
                 userData.messages = rows;
                 res.send(userData);
+              })
+              .catch((err) => {
+                console.log(err);
               });
-            });
+          });
       } else {
         res.send(false);
       }

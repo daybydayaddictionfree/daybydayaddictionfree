@@ -78,7 +78,7 @@ class App extends React.Component {
         .then((response) => {
           console.log('Response in verify Auth client', response);
           if (response.data === false) {
-
+            console.log('There is no cookie');     
           } else {
             console.log('DATA BACK HOME', response.data);
             this.setState({

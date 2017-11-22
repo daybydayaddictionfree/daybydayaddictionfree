@@ -73,14 +73,14 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
           .then((results) => {
             // Add cookie to database
             const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie')} )
-            q.insertCookie(cookieInfo)
-              .then((result) => {
-                // res.send(results);
-              });
-            q.insertFriends([[req.body.Friend1, req.body.Friend1Num, results.rows[0].id], [req.body.Friend2, req.body.Friend2Num, results.rows[0].id], [req.body.Friend3, req.body.Friend3Num, results.rows[0].id]])
-              .then((result) => {
-                console.log('Friends Added!');
-              });
+            return Promise.all(q.insertCookie(cookieInfo), q.insertFriends([[req.body.Friend1, req.body.Friend1Num, results.rows[0].id], [req.body.Friend2, req.body.Friend2Num, results.rows[0].id], [req.body.Friend3, req.body.Friend3Num, results.rows[0].id]]))
+              .then(() => {
+                res.send('user, cookie, friends added to database!')
+              })
+              .catch((err) => {
+                res.send(err);
+              })
+              
           });
       }
     });

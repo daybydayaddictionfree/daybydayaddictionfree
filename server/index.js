@@ -32,7 +32,7 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
         q.retrieveUserInfo(rows[0].id_smokers)
           .then(({ rows }) => {
             console.log('HIT TWO');
-            console.log(rows[0].id);
+            console.log(rows[0]);
             const userData = rows[0];      
             q.retrieveMessages(rows[0].id)
               .then(( {rows} ) => {   

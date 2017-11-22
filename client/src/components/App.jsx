@@ -6,6 +6,7 @@ import HomePage from './HomePage';
 import Login from './Login';
 import messages from '../../../sampleData';
 import SignUp from './SignUp';
+import LandingPage from './LandingPage';
 
 const cookies = new Cookies();
 
@@ -145,7 +146,8 @@ class App extends React.Component {
   }
 }
 
-const LandingPage = () => <h1>Future Landing Page</h1>;
+
 const SignupPage = () => <SignUp createUser={this.onClickSignUpSmoker} />;
+
 
 export default App;

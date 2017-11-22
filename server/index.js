@@ -52,9 +52,11 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
   q.checkEmail(req.body.email)
     .then(({ rows }) => {
       // if user is existing user
-      if (rows > 0) {
+      console.log('ROWS IN LOGIIN', rows);
+      if (rows.length > 0) {
         // store cookie
         q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows.email, id: rows.id });
+        // TODO get messages;
         res.send(rows);
         // if new user
       } else {

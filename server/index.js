@@ -59,7 +59,7 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
       console.log('ROWS IN LOGIIN', rows);
       if (rows.length > 0) {
         // store cookie
-        q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows.email, id: rows.id });
+        q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows[0].email, id: rows[0].id });
         // TODO get messages;
         res.send(rows);
         // if new user
@@ -83,6 +83,7 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
             const userInfo = Object.assign(rows, messages);
             res.send(messages);
           });
+
         // send back messages and user info
         // redirect to home page on client side
       } else {
@@ -108,9 +109,13 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
 
 app.get('/logout', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
-  // console.log(req.universalCookie.get('dbd-session-cookie'));
+  console.log('COOKIE IN LOGOUT', req.universalCookies.get('dbd-session-cookie'));
+  const token = req.universalCookies.get('dbd-session-cookie');
   // console.log(req.universalCookies.get('dbd-session-cookie'));
-  res.send('WE SHOULD REMOVE COOKIE FROM DATABASE');
+  q.removeCookie(token)
+    .then(() => {
+      res.send('REMOVED COOKIE FROM DATABASE');
+    });
 });
 
 app.get('*', cookiesMiddleWare(), (req, res) => {

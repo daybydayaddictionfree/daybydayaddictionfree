@@ -27,8 +27,9 @@ build/
 node_modules/
 bower_components/
 
-# Exclude this file
+# Exclude these files
 client/dist/bundle.js
+.env
 
 #exclude this directory
 keysAndIds/

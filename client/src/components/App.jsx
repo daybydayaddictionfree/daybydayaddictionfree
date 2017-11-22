@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Link, Route, Redirect, Switch } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import HomePage from './HomePage.jsx';
-import Login from './Login.jsx';
+import HomePage from './HomePage';
+import Login from './Login';
 import messages from '../../../sampleData';
 
 const cookies = new Cookies();
@@ -86,7 +86,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/landing" component={LandingPage} />
               <Route exact path="/signup" component={SignupPage} />
-              <Redirect to="/" />
+              <Redirect to="/landing" />
             </Switch>
           </div>
         </div>

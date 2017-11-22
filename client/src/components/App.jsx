@@ -17,6 +17,7 @@ class App extends React.Component {
       profileObj: {},
       tokenId: '',
     };
+
     this.responseGoogle = this.responseGoogle.bind(this);
     this.logState = this.logState.bind(this);
     this.homePage = this.homePage.bind(this);
@@ -29,18 +30,6 @@ class App extends React.Component {
     this.checkCookies();
   }
 
-  checkCookies() {
-    if (cookies.get('dbd-session-cookie')) {
-      axios.get('/verifyAuth')
-        .then((response) => {
-          console.log(response);
-          this.setState({
-            // update progress, messages, etc
-            loggedIn: true,
-          });
-        });
-    }
-  }
 
   logout() {
     this.setState({
@@ -54,32 +43,48 @@ class App extends React.Component {
     cookies.set('dbd-session-cookie', googleResponse.tokenId);
     // Need to add axios.get request here to ('/login')
     axios.post('/login', googleResponse.profileObj)
-      .then((response) => {
-        console.log('RESONSE IN LOGIN POST', response);
-        if (response === false) {
-          // redirect to signup
-        } else {
+     .then((response) => {
+      console.log('RESONSE IN LOGIN POST', response);
+      this.setState({
+        profileObj: googleResponse.profileObj,
+        tokenId: googleResponse.tokenId,
+      });
+      if (response === false) {
+        // redirect to signup
+      } else {
+        this.setState({
+          // update progress, messages, etc
+          loggedIn: true,
+        });
+      }
+    });
+  }
+  
+  // onClickSignUpSmoker(user) {
+  //   console.log('USER in CLICK SMOKER', user);
+    
+  //   axios.post('/signup', user)
+  //   .then((response) => {
+  //     if (response === true) {
+  //       console.log('USER already exists')
+  //       // rerender signup
+  //     } else {
+  //       //redirect to home page
+  //     }
+  //   });
+  // }
+  
+  checkCookies() {
+    if (cookies.get('dbd-session-cookie')) {
+      axios.get('/verifyAuth')
+        .then((response) => {
+          console.log(response);
           this.setState({
             // update progress, messages, etc
             loggedIn: true,
-            profileObj: googleResponse.profileObj,
-            tokenId: googleResponse.tokenId,
           });
-        }
-      });
-      }
-  }
-
-  onClickSignUpSmoker(user) {
-    axios.post('/signup', user)
-      .then((response) => {
-        if (response === true) {
-          console.log('USER already exists')
-          // rerender signup
-        } else {
-          //redirect to home page
-        }
-      })
+        });
+    }
   }
 
   logState() {
@@ -95,22 +100,22 @@ class App extends React.Component {
 
   render() {
     if (!this.state.loggedIn) {
-      return (
-        <div>
+      return <div>
           <nav>
-            <Link to="/landing" style={{ margin: '5px' }} >LandingPage</Link>
-            <Link to="/signup" style={{ margin: '5px' }} >SigupPage</Link>
+            <Link to="/landing" style={{ margin: "5px" }}>
+              LandingPage
+            </Link>
+           
             <Login responseGoogle={this.responseGoogle} />
           </nav>
           <div>
             <Switch>
               <Route exact path="/landing" component={LandingPage} />
-              <Route exact path="/signup" component={SignupPage} />
+              <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.state.profileObj} responseGoogle={this.responseGoogle} />} />
               <Redirect to="/" />
             </Switch>
           </div>
-        </div>
-      );
+        </div>;
     }
     return (
       <div>
@@ -125,6 +130,6 @@ class App extends React.Component {
 }
 
 const LandingPage = () => <h1>Future Landing Page</h1>;
-const SignupPage = () => <SignUp createUser={this.onClickSignUpSmoker}/>;
+const SignupPage = () => <SignUp createUser={this.onClickSignUpSmoker} />;
 
 export default App;

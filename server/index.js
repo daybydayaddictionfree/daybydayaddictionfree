@@ -30,11 +30,12 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
           .then((result) => {
             console.log(result);
           });
+      } else {
+        res.send(false);
       }
     });
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   // send back user info
-  res.send('WE CHECK COOKIE VS DATABASE');
 });
 
 app.post('/login', cookiesMiddleWare(), (req, res) => {

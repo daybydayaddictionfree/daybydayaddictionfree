@@ -62,7 +62,7 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
   //   .then(({ rows }) => {
   //     // if user is existing user
   //     if (rows > 0) {
-  //       res.send(rows);
+  //       res.send(true);
   //       // redirect to home page on client side
   //     } else {
   //       // if new user
@@ -72,7 +72,7 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
   //           // Add cookie to database
   //           q.insertCookie('Cookie info')
   //             .then((result) => {
-  //               res.send(result);
+  //               res.send(results);
   //             });
   //         });
   //     }

@@ -79,7 +79,7 @@ class App extends React.Component {
     if (cookies.get('dbd-session-cookie')) {
       axios.get('/verifyAuth')
         .then((response) => {
-          console.log(response);
+          console.log('Response in verify Auth client', response);
           if(response.data === false) {
 
           } else {

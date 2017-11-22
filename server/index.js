@@ -8,7 +8,7 @@ const q = require('../database/queries');
 const utils = require('./utils');
 
 // Seeds table with dummy data, comment out when use real data
-// const seed = require('../database/seed.js');
+const seed = require('../database/seed.js');
 // Uncomment the following line when are done with seed data:
 const db = require('../database/index.js');
 
@@ -16,32 +16,41 @@ const port = 8080;
 const app = express();
 
 app.use(parser.json());
-// app.use(parser.urlencoded({ extended: true }));
+app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
   // check database if cookie is valid
+  // console.log("Token being checked", req.universalCookies.get("dbd-session-cookie"));
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
-    .then(({ rows }) => {
+    .then(({ rows } ) => {
       //  if cookie is valied get smokers info from database
+      console.log('Rows In VERIFY', rows[0]);
       if (rows.length > 0) {
-        q.retriveUserInfo(rows.email)
-          .then((result) => {
-            console.log(result);
-          });
+        q.retrieveUserInfo(rows[0].id_smokers)
+          .then(({ rows }) => {
+            const userData = rows[0];
+            console.log('New Rows', rows)
+            q.retrieveMessages(rows[0].id)
+              .then(( {rows} ) => {
+                console.log('ROWS msgs' , rows);
+      
+                userData.messages = rows;  
+                
+                res.send(userData);
+              });
+            });
       } else {
         res.send(false);
       }
     });
-  // console.log(req.universalCookies.get('dbd-session-cookie'));
-  // send back user info
 });
 
 app.post('/login', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
   // check if new user or existing smoker
-  q.retrieveUserInfo(req.body.email)
+  q.checkEmail(req.body.email)
     .then(({ rows }) => {
       // if user is existing user
       if (rows > 0) {
@@ -59,29 +68,34 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
 // post request for signup
 app.post('/signup', cookiesMiddleWare(), (req, res) => {
   // check if existing user
-  q.retrieveUserInfo(req.body.email)
+  q.checkEmail(req.body.email)
     .then(({ rows }) => {
       // if user is existing user
       if (rows > 0) {
         // get messages
+        q.retrieveMessages(rows.id)
+        .then((messages) => {
+          const userInfo = Object.assign(rows, messages);
+          res.send(messages);
+        });
         // send back messages and user info
-        res.send(true);
         // redirect to home page on client side
       } else {
-        // if new user
         // Add user info to database 
         q.insertSmoker(req.body)
           .then((results) => {
-            // Add cookie to database
             const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie')} )
-            return Promise.all(q.insertCookie(cookieInfo), q.insertFriends(utils.friendify(req.body, results.rows[0].id)))
+            const friendInfo = utils.friendify(req.body, results.rows[0].id);
+
+            // add cookie and friends to database
+            Promise.all(q.insertCookie(cookieInfo), q.insertFriends(friendInfo))
               .then(() => {
-                res.send("user, cookie, friends added to database!");
+                // res.cookie('dbd-session-cookie', req.universalCookies.get('dbd-session-cookie'));
+                res.send('user, cookie, friends added to database!');
               })
               .catch(err => {
                 res.send(err);
               });
-              
           });
       }
     });

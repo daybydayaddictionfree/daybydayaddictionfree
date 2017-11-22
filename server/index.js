@@ -7,9 +7,9 @@ let twillioSend = require('../twillio/index');
 const q = require('../database/queries');
 
 // Seeds table with dummy data, comment out when use real data
-const seed = require('../database/seed.js');
+// const seed = require('../database/seed.js');
 // Uncomment the following line when are done with seed data:
-// const db = require('../database/index.js');
+const db = require('../database/index.js');
 
 const port = 8080;
 const app = express();
@@ -45,7 +45,7 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
       // if user is existing user
       if (rows > 0) {
         // store cookie
-        q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows.email, idSmokers: rows.id });
+        q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows.email, id: rows.id });
         res.send(rows);
         // if new user
       } else {
@@ -57,7 +57,6 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
 
 // post request for signup
 app.post('/signup', cookiesMiddleWare(), (req, res) => {
-  console.log('User info on server', req.body);
   // check if existing user
   q.retrieveUserInfo(req.body.email)
     .then(({ rows }) => {
@@ -73,8 +72,7 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
         q.insertSmoker(req.body)
           .then((results) => {
             // Add cookie to database
-            const cookieInfo = Object.assign(results.rows, {token: req.universalCookies.get('dbd-session-cookie')} )
-            console.log('RESULTS IN SECOND QUERY', cookieInfo);
+            const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie')} )
             q.insertCookie(cookieInfo)
               .then((result) => {
                 res.send(results);

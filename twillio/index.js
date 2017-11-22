@@ -16,7 +16,8 @@ const send = (number) => {
     console.log(message.sid);
   });
 };
-const sendSmokers = (array) => {
+const sendSmokers = () => {
+  var array = ['15106851561', '19176553779', '18313327272'];
   array.forEach((item) => {
     send(item);
   });

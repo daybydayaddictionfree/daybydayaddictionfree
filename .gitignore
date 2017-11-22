@@ -34,4 +34,3 @@ client/dist/bundle.js
 #exclude these directories directory
 keysAndIds/
 compiled/
-__tests__/

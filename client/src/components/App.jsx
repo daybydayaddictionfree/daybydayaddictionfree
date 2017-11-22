@@ -22,6 +22,7 @@ class App extends React.Component {
     this.homePage = this.homePage.bind(this);
     this.checkCookies = this.checkCookies.bind(this);
     this.logout = this.logout.bind(this);
+    this.onClickSignUpSmoker = this.onClickSignUpSmoker.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +70,18 @@ class App extends React.Component {
       }
   }
 
+  onClickSignUpSmoker(user) {
+    axios.post('/signup', user)
+      .then((response) => {
+        if (response === true) {
+          console.log('USER already exists')
+          // rerender signup
+        } else {
+          //redirect to home page
+        }
+      })
+  }
+
   logState() {
     console.log('Here is state');
     console.log(this.state);
@@ -112,6 +125,6 @@ class App extends React.Component {
 }
 
 const LandingPage = () => <h1>Future Landing Page</h1>;
-const SignupPage = () => <SignUp />;
+const SignupPage = () => <SignUp createUser={this.onClickSignUpSmoker}/>;
 
 export default App;

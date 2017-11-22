@@ -8,7 +8,9 @@ const Login = props => (
     clientId={GoogleId.client_id}
     buttonText="Login using Google"
     onSuccess={props.responseGoogle}
-    onFailure={props.responseGoogle}
+    onFailure={() => {
+      console.log('FAILURE__________________');
+    }}
   />
 );
 

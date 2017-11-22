@@ -91,7 +91,7 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
                 // res.cookie('dbd-session-cookie', req.universalCookies.get('dbd-session-cookie'));
                 res.send('user, cookie, friends added to database!');
               })
-              .catch(err => {
+              .catch((err) => {
                 res.send(err);
               });
           });

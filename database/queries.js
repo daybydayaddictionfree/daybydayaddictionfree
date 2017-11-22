@@ -2,7 +2,7 @@ const format = require('pg-format');
 const { query } = require('./index');
 
 const insertSmoker = (({ name, userNum, email }) =>
-  query('INSERT INTO smokers (name, phone, email, progress, responded) VALUES ($1, $2, $3, $4) RETURNING id, email', [name, userNum, email, 0, false]));
+  query('INSERT INTO smokers (name, phone, email, progress, responded) VALUES ($1, $2, $3, $4, $5) RETURNING id, email', [name, userNum, email, 0, false]));
 
 const insertFriends = ((friends) => {
   const sql = format('INSERT INTO friends(name, phone, id_smokers) VALUES %L', friends);

@@ -87,7 +87,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/landing" component={LandingPage} />
               <Route exact path="/signup" component={SignupPage} />
-              <Redirect to="/" />
+              <Redirect to="/landing" />
             </Switch>
           </div>
         </div>

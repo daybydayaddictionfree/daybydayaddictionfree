@@ -1,11 +1,3 @@
-import React from 'react';
-import {
-  Simulate,
-  renderIntoDocument,
-  findRenderedDOMComponentWithClass,
-  scryRenderedDOMComponentsWithClass
-} from 'react-dom/test-utils';
-
 describe('App', () => {
 
   let app;

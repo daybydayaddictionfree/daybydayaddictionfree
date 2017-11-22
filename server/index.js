@@ -23,7 +23,6 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   // check database if cookie is valid
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
     .then(({ rows }) => {
-      console.log('FIRST RESULT', rows);
       //  if cookie is valied get smokers info from database
       if (rows.length > 0) {
         q.retriveUserInfo(rows.email)
@@ -58,26 +57,31 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
 
 // post request for signup
 app.post('/signup', cookiesMiddleWare(), (req, res) => {
+  console.log('User info on server', req.body);
   // check if existing user
-  // q.retrieveUserInfo(req.body.email)
-  //   .then(({ rows }) => {
-  //     // if user is existing user
-  //     if (rows > 0) {
-  //       res.send(true);
-  //       // redirect to home page on client side
-  //     } else {
-  //       // if new user
-  //       // Add user info to database 
-  //       q.insertSmoker(['smokers info'])
-  //         .then((results) => {
-  //           // Add cookie to database
-  //           q.insertCookie('Cookie info')
-  //             .then((result) => {
-  //               res.send(results);
-  //             });
-  //         });
-  //     }
-  //   });
+  q.retrieveUserInfo(req.body.email)
+    .then(({ rows }) => {
+      // if user is existing user
+      if (rows > 0) {
+        // get messages
+        // send back messages and user info
+        res.send(true);
+        // redirect to home page on client side
+      } else {
+        // if new user
+        // Add user info to database 
+        q.insertSmoker(req.body)
+          .then((results) => {
+            // Add cookie to database
+            const cookieInfo = Object.assign(results.rows, {token: req.universalCookies.get('dbd-session-cookie')} )
+            console.log('RESULTS IN SECOND QUERY', cookieInfo);
+            q.insertCookie(cookieInfo)
+              .then((result) => {
+                res.send(results);
+              });
+          });
+      }
+    });
 });
 
 app.get('/logout', cookiesMiddleWare(), (req, res) => {

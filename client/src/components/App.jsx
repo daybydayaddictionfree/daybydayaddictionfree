@@ -42,7 +42,6 @@ class App extends React.Component {
     console.log('googleResponse', googleResponse);
    
     cookies.set('dbd-session-cookie', googleResponse.tokenId);
-    // Need to add axios.get request here to ('/login')
     axios.post('/login', googleResponse.profileObj)
      .then((response) => {
       console.log('RESONSE IN LOGIN POST', response);
@@ -63,8 +62,9 @@ class App extends React.Component {
   
   onClickSignUpSmoker(user) {
     console.log('USER in CLICK SMOKER', user);
-    
-    axios.post('/signup', user)
+    console.log('THIS>STATE',this.state)
+    const userInfo = Object.assign(user, this.state.profileObj);
+    axios.post('/signup', userInfo)
     .then((response) => {
       if (response === true) {
         console.log('USER already exists')
@@ -80,10 +80,14 @@ class App extends React.Component {
       axios.get('/verifyAuth')
         .then((response) => {
           console.log(response);
-          this.setState({
-            // update progress, messages, etc
-            loggedIn: true,
-          });
+          if(response.data === false) {
+
+          } else {
+            this.setState({
+              // update progress, messages, etc
+              loggedIn: true,
+            });
+          }
         });
     }
   }
@@ -133,7 +137,6 @@ class App extends React.Component {
         <div>
           <Switch>
             <Route exact path="/landing" component={LandingPage} />
-            <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.state.profileObj} responseGoogle={this.responseGoogle} />} />
             <Redirect to="/" />
           </Switch>
         </div>

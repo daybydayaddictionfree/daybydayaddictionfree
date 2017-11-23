@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, Route, Redirect, Switch } from 'react-router-dom';
+import triggerCheckins from '../helpers/triggerCheckins';
 import Cookies from 'universal-cookie';
 import HomePage from './HomePage';
 import Login from './Login';
-import messages from '../../../sampleData';
 import SignUp from './SignUp';
 import LandingPage from './LandingPage';
 
@@ -15,17 +15,22 @@ class App extends React.Component {
     super();
     this.state = {
       loggedIn: false,
+      name: '',
+      progress: 0,
+      messages: [],
       profileObj: {},
       tokenId: '',
       signIn: false,
       messages: [],
       progress: 0,
+      admin: true,
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
     this.homePage = this.homePage.bind(this);
     this.checkCookies = this.checkCookies.bind(this);
     this.logout = this.logout.bind(this);
+    this.responseGoogle = this.responseGoogle.bind(this);
     this.onClickSignUpSmoker = this.onClickSignUpSmoker.bind(this);
   }
 
@@ -66,7 +71,8 @@ class App extends React.Component {
           this.setState({
             // update progress, messages, etc
             messages: response.data.messages,
-            progress: response.data,
+            progress: response.data.progress,
+            admin: response.data.admin,
             loggedIn: true,
           });
         }
@@ -83,7 +89,10 @@ class App extends React.Component {
             this.setState({
               // update progress, messages, etc
               profileObj: response.data,
+              name: response.data.name,
+              progress: response.data.progress,
               messages: response.data.messages,
+              admin: response.data.admin,
               loggedIn: true,
             });
           }
@@ -103,12 +112,21 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.state.loggedIn) {
+    if (this.state.loggedIn && this.state.admin) {
       return (
         <div>
-          <button onClick={this.logState}>
-            Click to console log user credentials
+          <button style={{ backgroundColor: 'green' }} onClick={triggerCheckins}>
+            Send check-in messages to users
           </button>
+          <Switch>
+            <Route exact path="/home" render={this.homePage} />
+            <Redirect to="/home" />
+          </Switch>
+        </div>
+      );
+    } else if (this.state.loggedIn) {
+      return (
+        <div>
           <Switch>
             <Route exact path="/home" render={this.homePage} />
             <Redirect to="/home" />
@@ -120,10 +138,10 @@ class App extends React.Component {
       return (
         <div>
           <Switch>
-            <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.state.profileObj} responseGoogle={this.responseGoogle} />} />
+            <Route exact path="/signup" render={this.signUp} />
             <Redirect to="/signup" />
           </Switch>
-        </div>
+        </div>``
       );
     }
     return (

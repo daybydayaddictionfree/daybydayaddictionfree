@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const parser = require('body-parser');
 let twilio = require('twilio');
-let twillioSend = require('../twillio/index');
+let sendSmokers = require('../twillio/index');
 const q = require('../database/queries');
 const utils = require('./utils');
 
@@ -18,6 +18,11 @@ const app = express();
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('/sendcheckins', (req, res) => {
+  sendSmokers();
+  res.send();
+});
 
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);

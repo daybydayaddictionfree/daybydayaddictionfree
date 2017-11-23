@@ -16,8 +16,6 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       name: '',
-      progress: 0,
-      messages: [],
       profileObj: {},
       tokenId: '',
       signIn: false,
@@ -88,6 +86,7 @@ class App extends React.Component {
             console.log('DATA BACK HOME', response.data);
             this.setState({
               // update progress, messages, etc
+              
               profileObj: response.data,
               name: response.data.name,
               progress: response.data.progress,

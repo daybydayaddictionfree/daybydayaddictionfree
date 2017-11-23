@@ -25,8 +25,8 @@ const HomePage = (props) => {
         onLogoutSuccess={logout}
       />
       <h1 style={{ textAlign: 'center' }} >{props.userState.profileObj.name} </h1>
-      <ProgressBar />
-      <MessageList messages={props.userState.messages} />
+      <ProgressBar progress={props.userState.progress} />
+      <MessageList messages={props.messages} />
     </div>
   );
 }

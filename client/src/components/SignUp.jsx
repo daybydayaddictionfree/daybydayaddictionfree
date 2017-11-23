@@ -105,7 +105,7 @@ class SignUp extends React.Component {
                     }
                 `}
                 </Style>
-
+                    {console.log('signUP props', this.props)}
                 <h2>Signup Form</h2>
 
 

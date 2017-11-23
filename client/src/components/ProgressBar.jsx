@@ -8,13 +8,13 @@ class ProgressBar extends React.Component {
     this.state = {
       /* this number will update from the database everytime a
       smoker has a successful or unsuccessful day */
-      completed: 30,
+      completed: 0,
     };
   }
 
   // call this or a similar function when database is updated
-  progress(value) {
-    this.setState({ completed: value });
+  componetDidMount() {
+    this.setState({ completed: this.props.progress });
   }
 
   render() {

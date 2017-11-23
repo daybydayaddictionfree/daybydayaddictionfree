@@ -66,7 +66,7 @@ class App extends React.Component {
           this.setState({
             // update progress, messages, etc
             messages: response.data.messages,
-            progress: response.data,
+            progress: response.data.progress,
             loggedIn: true,
           });
         }

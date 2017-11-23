@@ -1,10 +1,9 @@
-const dummySMSFire = () => {
-  console.log('Mock SMS messages fire')
-};
+import axios from 'axios';
 
 const triggerCheckins = () => {
-  dummySMSFire();
-  // setTimeout(triggerCheckins, 1000); //trigger a checkin message every minute
+  axios.get('/sendcheckins')
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
 };
 
 export default triggerCheckins;

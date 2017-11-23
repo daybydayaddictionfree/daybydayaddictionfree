@@ -31,6 +31,32 @@ const removeCookie = (token =>
   query('DELETE from cookies WHERE token=$1', [token]));
 
 
+const retrieveUserOnNum = (number =>
+  query('SELECT * from smokers WHERE phone=$1', [number]));
+
+const retrieveFriendsOnId = (UserId =>
+  query('SELECT * from friends WHERE id_smokers=$1', [UserId]));
+
+
+
+
+
+
+const retrieveFriendOnNum = (number =>
+  query('SELECT * from friends WHERE phone=$1', [number]));
+
+const retrieveUserOnId = (UserId =>
+  query('SELECT * from smokers WHERE id=$1', [UserId]));
+
+const updateSmokerRecord = (status, smokerId, priorProgress) => {
+  if (status === '1') {
+    query('UPDATE smokers SET progress=$1, responded=$2 WHERE id=$3', [priorProgress + 1, true, smokerId]);
+  } else if (status === '2') {
+    query('UPDATE smokers SET progress=$1, responded=$2 WHERE id=$3', [0, true, smokerId]);
+  }
+};
+
+
 module.exports.insertSmoker = insertSmoker;
 module.exports.insertFriends = insertFriends;
 module.exports.insertMessage = insertMessage;
@@ -40,3 +66,15 @@ module.exports.insertCookie = insertCookie;
 module.exports.retrieveUserInfo = retrieveUserInfo;
 module.exports.retrieveMessages = retrieveMessages;
 module.exports.removeCookie = removeCookie;
+
+
+module.exports.retrieveUserOnNum = retrieveUserOnNum;
+
+module.exports.retrieveFriendsOnId = retrieveFriendsOnId;
+
+module.exports.retrieveFriendOnNum = retrieveFriendOnNum;
+
+module.exports.retrieveUserOnId = retrieveUserOnId;
+
+module.exports.updateSmokerRecord = updateSmokerRecord;
+

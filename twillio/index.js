@@ -8,21 +8,36 @@ const authToken = key;
 
 const client = new twilio(accountSid, authToken);
 
-const send = (number) => {
-  number = "+" + number;
+const send = (telNumber, message) => {
   client.messages.create({
-    to: number,
+    to: telNumber,
     from: '+14156809196',
-    body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+    body: message,
   }, (err, message) => {
-    console.log(message.sid);
+    console.log(err);
   });
 };
 const sendSmokers = () => {
-  var array = ['15106851561', '19176553779', '18313327272'];
+  var array = ['+15106851561', '+19176553779', '+18313327272'];
   array.forEach((item) => {
     send(item);
   });
 };
 
-module.exports = sendSmokers;
+const sendStatusToFriends = (status, telNumbers, smokerName) => {
+  let message = '';
+  if (status === '1'){
+    message = smokerName + ' did not smoke a cigarette today.';
+  } else if (status === '2') {
+    message = smokerName + ' smoked a cigarette today.';
+  } else {
+    return;
+  }
+  telNumbers.forEach((telNumber) => {
+    send(telNumber.phone, message);
+  });
+};
+
+
+module.exports.sendSmokers = sendSmokers;
+module.exports.sendStatusToFriends = sendStatusToFriends;

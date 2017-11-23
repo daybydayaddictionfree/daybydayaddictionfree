@@ -19,10 +19,10 @@ class App extends React.Component {
       tokenId: '',
       signIn: false,
       messages: [],
+      progress: 0,
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
-    this.logState = this.logState.bind(this);
     this.homePage = this.homePage.bind(this);
     this.checkCookies = this.checkCookies.bind(this);
     this.logout = this.logout.bind(this);
@@ -37,11 +37,11 @@ class App extends React.Component {
     const userInfo = Object.assign(user, this.state.profileObj);
     axios.post('/signup', userInfo)
       .then((response) => {
-        if (response === true) {
-          console.log('USER already exists');
-          // rerender signup
-        } else {
+        if (response) {
           // redirect to home page
+          this.setState({ loggedIn: true });
+        } else {
+          console.log('ERROR WITH SIGN UP');
         }
       });
   }
@@ -53,7 +53,6 @@ class App extends React.Component {
   }
 
   responseGoogle(googleResponse) {
-    console.log('googleResponse', googleResponse);
     cookies.set('dbd-session-cookie', googleResponse.tokenId);
     axios.post('/login', googleResponse.profileObj)
       .then((response) => {
@@ -66,6 +65,8 @@ class App extends React.Component {
         } else {
           this.setState({
             // update progress, messages, etc
+            messages: response.data.messages,
+            progress: response.data,
             loggedIn: true,
           });
         }
@@ -77,12 +78,11 @@ class App extends React.Component {
       axios.get('/verifyAuth')
         .then((response) => {
           console.log('Response in verify Auth client', response);
-          if (response.data === false) {
-
-          } else {
+          if (response.data !== false) {
             console.log('DATA BACK HOME', response.data);
             this.setState({
               // update progress, messages, etc
+              profileObj: response.data,
               messages: response.data.messages,
               loggedIn: true,
             });
@@ -91,14 +91,14 @@ class App extends React.Component {
     }
   }
 
-  logState() {
-    console.log('Here is state');
-    console.log(this.state);
-  }
-
   homePage() {
     return (
-      <HomePage messages={this.state.messages} userState={this.state} cookies={cookies} logout={this.logout} />
+      <HomePage
+        messages={this.state.messages}
+        userState={this.state}
+        cookies={cookies}
+        logout={this.logout}
+      />
     );
   }
 

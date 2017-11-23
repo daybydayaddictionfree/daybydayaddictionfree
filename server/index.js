@@ -92,7 +92,7 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
       Promise.all(q.insertCookie(cookieInfo), q.insertFriends(friendInfo))
         .then(() => {
           // res.cookie('dbd-session-cookie', req.universalCookies.get('dbd-session-cookie'));
-          res.send('user, cookie, friends added to database!');
+          res.send(true);
         })
         .catch((err) => {
           res.send(err);

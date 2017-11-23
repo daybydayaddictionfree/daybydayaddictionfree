@@ -24,7 +24,7 @@ const HomePage = (props) => {
         buttonText="Logout"
         onLogoutSuccess={logout}
       />
-      <h1 style={{ textAlign: 'center' }} >{props.userState.profileObj.givenName} {props.userState.profileObj.familyName}</h1>
+      <h1 style={{ textAlign: 'center' }} >{props.userState.profileObj.name} </h1>
       <ProgressBar />
       <MessageList messages={props.messages} />
     </div>

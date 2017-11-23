@@ -32,10 +32,12 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
         q.retrieveUserInfo(rows[0].id_smokers)
           .then((data) => {
             const userData = data.rows[0];
+
             // Get messages from user's friends
             q.retrieveMessages(userData.id)
               .then((result) => {
                 userData.messages = result.rows;
+
                 // Send info and messages back to client
                 res.send(userData);
               })
@@ -61,14 +63,16 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
         // store cookie in database
         q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows[0].email, id: rows[0].id })
           .then(() => {
-          // TODO get messages;
+            // Get user messages from database
             q.retrieveMessages(rows[0].id)
               .then((result) => {
+                // add messages to user object
                 userData.messages = result.rows;
+                // send user info and messages back to client
                 res.send(userData);
               });
           });
-        // if new user
+      // if new user
       } else {
         // redirect to signup page
         res.send(false);
@@ -78,36 +82,21 @@ app.post('/login', cookiesMiddleWare(), (req, res) => {
 
 // post request for signup
 app.post('/signup', cookiesMiddleWare(), (req, res) => {
-  // check if existing user
-  q.checkEmail(req.body.email)
-    .then(({ rows }) => {
-      // if user is existing user
-      if (rows > 0) {
-        // get messages
-        q.retrieveMessages(rows.id)
-          .then((messages) => {
-            const userInfo = Object.assign(rows, messages);
-            res.send(messages);
-          });
-        // send back messages and user info
-        // redirect to home page on client side
-      } else {
-        // Add user info to database
-        q.insertSmoker(req.body)
-          .then((results) => {
-            const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie') });
-            const friendInfo = utils.friendify(req.body, results.rows[0].id);
-            // add cookie and friends to database
-            Promise.all(q.insertCookie(cookieInfo), q.insertFriends(friendInfo))
-              .then(() => {
-                // res.cookie('dbd-session-cookie', req.universalCookies.get('dbd-session-cookie'));
-                res.send('user, cookie, friends added to database!');
-              })
-              .catch((err) => {
-                res.send(err);
-              });
-          });
-      }
+  // Add user info to database
+  q.insertSmoker(req.body)
+    .then((results) => {
+      const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie') });
+      const friendInfo = utils.friendify(req.body, results.rows[0].id);
+
+      // add cookie and friends to database
+      Promise.all(q.insertCookie(cookieInfo), q.insertFriends(friendInfo))
+        .then(() => {
+          // res.cookie('dbd-session-cookie', req.universalCookies.get('dbd-session-cookie'));
+          res.send('user, cookie, friends added to database!');
+        })
+        .catch((err) => {
+          res.send(err);
+        });
     });
 });
 

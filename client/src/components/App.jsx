@@ -82,6 +82,7 @@ class App extends React.Component {
             console.log('DATA BACK HOME', response.data);
             this.setState({
               // update progress, messages, etc
+              
               profileObj: response.data,
               messages: response.data.messages,
               loggedIn: true,

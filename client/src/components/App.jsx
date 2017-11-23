@@ -23,13 +23,12 @@ class App extends React.Component {
       signIn: false,
       messages: [],
       progress: 0,
+      admin: true,
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
     this.homePage = this.homePage.bind(this);
     this.checkCookies = this.checkCookies.bind(this);
-    this.homePage = this.homePage.bind(this);
-    this.logState = this.logState.bind(this);
     this.logout = this.logout.bind(this);
     this.responseGoogle = this.responseGoogle.bind(this);
     this.onClickSignUpSmoker = this.onClickSignUpSmoker.bind(this);
@@ -72,7 +71,8 @@ class App extends React.Component {
           this.setState({
             // update progress, messages, etc
             messages: response.data.messages,
-            progress: response.data,
+            progress: response.data.progress,
+            admin: response.data.admin,
             loggedIn: true,
           });
         }
@@ -88,13 +88,11 @@ class App extends React.Component {
             console.log('DATA BACK HOME', response.data);
             this.setState({
               // update progress, messages, etc
-<<<<<<< HEAD
               profileObj: response.data,
-=======
               name: response.data.name,
               progress: response.data.progress,
->>>>>>> made some refactoring to improve home page
               messages: response.data.messages,
+              admin: response.data.admin,
               loggedIn: true,
             });
           }
@@ -117,7 +115,7 @@ class App extends React.Component {
     if (this.state.loggedIn && this.state.admin) {
       return (
         <div>
-          <button style={{ backgroundColor: 'red' }} onClick={triggerCheckins}>
+          <button style={{ backgroundColor: 'green' }} onClick={triggerCheckins}>
             Send check-in messages to users
           </button>
           <Switch>
@@ -129,9 +127,6 @@ class App extends React.Component {
     } else if (this.state.loggedIn) {
       return (
         <div>
-          <button onClick={this.logState}>
-            Click to console log user credentials
-          </button>
           <Switch>
             <Route exact path="/home" render={this.homePage} />
             <Redirect to="/home" />
@@ -146,7 +141,7 @@ class App extends React.Component {
             <Route exact path="/signup" render={this.signUp} />
             <Redirect to="/signup" />
           </Switch>
-        </div>
+        </div>``
       );
     }
     return (

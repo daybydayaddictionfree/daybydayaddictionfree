@@ -36,11 +36,11 @@ class App extends React.Component {
     const userInfo = Object.assign(user, this.state.profileObj);
     axios.post('/signup', userInfo)
       .then((response) => {
-        if (response === true) {
-          console.log('USER already exists');
-          // rerender signup
-        } else {
+        if (response) {
           // redirect to home page
+          this.setState({ loggedIn: true });
+        } else {
+          console.log('ERROR WITH SIGN UP');
         }
       });
   }

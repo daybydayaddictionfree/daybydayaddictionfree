@@ -13,8 +13,8 @@ class ProgressBar extends React.Component {
   }
 
   // call this or a similar function when database is updated
-  progress(value) {
-    this.setState({ completed: value });
+  componetDidMount() {
+    this.setState({ completed: this.props.progress });
   }
 
   render() {

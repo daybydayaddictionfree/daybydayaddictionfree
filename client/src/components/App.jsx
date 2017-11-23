@@ -16,8 +16,6 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       name: '',
-      progress: 0,
-      messages: [],
       profileObj: {},
       tokenId: '',
       signIn: false,

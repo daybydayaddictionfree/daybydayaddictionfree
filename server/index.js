@@ -26,19 +26,16 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
     .then(({ rows }) => {
       // If cookie is valid..
-        console.log('ROWS', rows);
       if (rows.length > 0) {
         // Get user info
 
         q.retrieveUserInfo(rows[0].id_smokers)
           .then((data) => {
             const userData = data.rows[0];
-
             // Get messages from user's friends
-            q.retrieveMessages(rows[0].id)
+            q.retrieveMessages(userData.id)
               .then((result) => {
                 userData.messages = result.rows;
-
                 // Send info and messages back to client
                 res.send(userData);
               })

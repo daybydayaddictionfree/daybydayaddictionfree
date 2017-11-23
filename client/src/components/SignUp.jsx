@@ -105,7 +105,6 @@ class SignUp extends React.Component {
                     }
                 `}
                 </Style>
-                    {console.log('signUP props', this.props)}
                 <h2>Signup Form</h2>
 
 
@@ -134,7 +133,7 @@ class SignUp extends React.Component {
 
                 <div className="clearfix">
                     <button type="button" className="cancelbtn">Cancel</button>
-                    <button type="submit" className="signupbtn" disabled= {!this.state.userNum || !this.state.Friend1 || !this.state.Friend2 || !this.state.Friend3 || !this.state.Friend1Num || !this.state.Friend2Num || !this.state.Friend3Num || !this.props.profile.email} onClick = {() => {
+                    <button type="submit" className="signupbtn" disabled= {!this.state.userNum || !this.state.Friend1 || !this.state.Friend2 || !this.state.Friend3 || !this.state.Friend1Num || !this.state.Friend2Num || !this.state.Friend3Num} onClick = {() => {
                     this.props.createUser(this.state);
                     }}>Sign Up</button>
                 </div>

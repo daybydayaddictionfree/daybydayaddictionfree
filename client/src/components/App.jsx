@@ -18,6 +18,7 @@ class App extends React.Component {
       tokenId: '',
       signIn: false,
       messages: [],
+      progress: 0,
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -52,7 +53,6 @@ class App extends React.Component {
   }
 
   responseGoogle(googleResponse) {
-    console.log('googleResponse', googleResponse);
     cookies.set('dbd-session-cookie', googleResponse.tokenId);
     axios.post('/login', googleResponse.profileObj)
       .then((response) => {
@@ -65,6 +65,8 @@ class App extends React.Component {
         } else {
           this.setState({
             // update progress, messages, etc
+            messages: response.data.messages,
+            progress: response.data,
             loggedIn: true,
           });
         }
@@ -77,7 +79,6 @@ class App extends React.Component {
         .then((response) => {
           console.log('Response in verify Auth client', response);
           if (response.data === false) {
-            console.log('There is no cookie');     
           } else {
             console.log('DATA BACK HOME', response.data);
             this.setState({

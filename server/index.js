@@ -21,29 +21,33 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
-  // check database if cookie is valid
-  // console.log("Token being checked", req.universalCookies.get("dbd-session-cookie"));
+
+  // Is cookie valid?
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
     .then(({ rows }) => {
-      //  if cookie is valied get smokers info from database
-      console.log('HIT ONE');
-      
+      // If cookie is valid..
+        console.log('ROWS', rows);
       if (rows.length > 0) {
+        // Get user info
+
         q.retrieveUserInfo(rows[0].id_smokers)
-          .then(({ rows }) => {
-            console.log('HIT TWO');
-            console.log(rows[0]);
-            const userData = rows[0];      
+          .then((data) => {
+            const userData = data.rows[0];
+
+            // Get messages from user's friends
             q.retrieveMessages(rows[0].id)
-              .then(( {rows} ) => {   
-                console.log('HIT THREE');
-                userData.messages = rows;
+              .then((result) => {
+                userData.messages = result.rows;
+
+                // Send info and messages back to client
                 res.send(userData);
               })
               .catch((err) => {
-                console.log(err);
+                res.send(err);
               });
           });
+
+      // If cookie is not valid..
       } else {
         res.send(false);
       }
@@ -51,17 +55,22 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
 });
 
 app.post('/login', cookiesMiddleWare(), (req, res) => {
-  console.log('Serving request type ', req.method, ' from ', req.path);
-  // check if new user or existing smoker
+  // Check if user is already signed up
   q.checkEmail(req.body.email)
     .then(({ rows }) => {
       // if user is existing user
-      console.log('ROWS IN LOGIIN', rows);
       if (rows.length > 0) {
-        // store cookie
-        q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows[0].email, id: rows[0].id });
-        // TODO get messages;
-        res.send(rows);
+        const userData = rows[0];
+        // store cookie in database
+        q.insertCookie({ token: req.universalCookies.get('dbd-session-cookie'), email: rows[0].email, id: rows[0].id })
+          .then(() => {
+          // TODO get messages;
+            q.retrieveMessages(rows[0].id)
+              .then((result) => {
+                userData.messages = result.rows;
+                res.send(userData);
+              });
+          });
         // if new user
       } else {
         // redirect to signup page
@@ -83,7 +92,6 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
             const userInfo = Object.assign(rows, messages);
             res.send(messages);
           });
-
         // send back messages and user info
         // redirect to home page on client side
       } else {
@@ -92,7 +100,6 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
           .then((results) => {
             const cookieInfo = Object.assign(results.rows[0], {token: req.universalCookies.get('dbd-session-cookie') });
             const friendInfo = utils.friendify(req.body, results.rows[0].id);
-
             // add cookie and friends to database
             Promise.all(q.insertCookie(cookieInfo), q.insertFriends(friendInfo))
               .then(() => {
@@ -109,7 +116,6 @@ app.post('/signup', cookiesMiddleWare(), (req, res) => {
 
 app.get('/logout', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
-  console.log('COOKIE IN LOGOUT', req.universalCookies.get('dbd-session-cookie'));
   const token = req.universalCookies.get('dbd-session-cookie');
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   q.removeCookie(token)
@@ -124,10 +130,7 @@ app.get('*', cookiesMiddleWare(), (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
 });
 app.post('/admin', cookiesMiddleWare(), (req, res) => {
-  // check cookie and admin status
-  // set all responded values to false
-    // if true 
-      // run fcn   
+
 });
 
 app.post('/sms', function(req, res) {

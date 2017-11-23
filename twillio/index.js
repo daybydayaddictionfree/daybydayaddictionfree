@@ -1,10 +1,12 @@
 const { key, sid } = require('../keysAndIds/twillioKey');
+const twilio = require('twilio');
 
 const accountSid = sid;
 const authToken = key;
 
 // require the Twilio module and create a REST client
-const client = require('twilio')(accountSid, authToken);
+
+const client = new twilio(accountSid, authToken);
 
 const send = (telNumber, message) => {
   client.messages.create({

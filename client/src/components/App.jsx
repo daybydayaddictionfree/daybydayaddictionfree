@@ -22,7 +22,6 @@ class App extends React.Component {
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
-    this.logState = this.logState.bind(this);
     this.homePage = this.homePage.bind(this);
     this.checkCookies = this.checkCookies.bind(this);
     this.logout = this.logout.bind(this);
@@ -78,8 +77,7 @@ class App extends React.Component {
       axios.get('/verifyAuth')
         .then((response) => {
           console.log('Response in verify Auth client', response);
-          if (response.data === false) {
-          } else {
+          if (response.data !== false) {
             console.log('DATA BACK HOME', response.data);
             this.setState({
               // update progress, messages, etc
@@ -92,14 +90,14 @@ class App extends React.Component {
     }
   }
 
-  logState() {
-    console.log('Here is state');
-    console.log(this.state);
-  }
-
   homePage() {
     return (
-      <HomePage messages={this.state.messages} userState={this.state} cookies={cookies} logout={this.logout} />
+      <HomePage
+        messages={this.state.messages}
+        userState={this.state}
+        cookies={cookies}
+        logout={this.logout}
+      />
     );
   }
 

@@ -12,7 +12,7 @@ const seed = require('../database/seed.js');
 // Uncomment the following line when are done with seed data:
 const db = require('../database/index.js');
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 const app = express();
 
 app.use(parser.json());

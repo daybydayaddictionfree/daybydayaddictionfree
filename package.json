@@ -9,10 +9,10 @@
   },
   "scripts": {
     "react-dev": "webpack -d --watch",
-   
     "start:server": "nodemon server/index.js",
     "set:test": "npm install -g babel-cli && babel . --watch --out-dir compiled --presets=es2015,react --ignore=node_modules,compiled,client/dist --source-maps inline",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "start": "nf start"
   },
   "jest": {
     "snapshotSerializers": [
@@ -28,6 +28,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "foreman": "^2.0.0",
     "material-ui": "^0.19.4",
     "ngrok": "^2.2.23",
     "path": "^0.12.7",
@@ -73,7 +74,6 @@
     "react-dom": "^16.1.1",
     "react-router-dom": "^4.2.2",
     "webpack": "^3.8.1"
-
   },
   "babel": {
     "presets": [

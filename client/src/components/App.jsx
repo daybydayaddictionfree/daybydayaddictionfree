@@ -140,7 +140,7 @@ class App extends React.Component {
             <Route exact path="/signup" render={this.signUp} />
             <Redirect to="/signup" />
           </Switch>
-        </div>``
+        </div>
       );
     }
     return (
@@ -162,7 +162,6 @@ class App extends React.Component {
     );
   }
 }
-
 
 const SignupPage = () => <SignUp createUser={this.onClickSignUpSmoker} />;
 

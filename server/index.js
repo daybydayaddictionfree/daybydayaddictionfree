@@ -122,7 +122,30 @@ app.post('/admin', cookiesMiddleWare(), (req, res) => {
 app.post('/sms', (req, res) => {
   var message = req.body.Body;
   var number = req.body.From;
+  q.retrieveUserOnNum(number).then(({ rows }) => {
+    if (rows.length === 1) {
+      console.log('I am a smoker');
+      //is smooker
+      let userRow = rows[0];
+      let friends = [];
+      q.retrieveFriendsOnId(userRow.id).then(({ rows }) => {
+        friends = rows;
+        twillioSend.sendStatusToFriends(message, rows, userRow.name);
+        q.updateSmokerRecord(message, userRow.id, userRow.progress);
+      });
 
+    } else {
+      q.retrieveFriendOnNum(number).then(({ rows }) => {
+        if (friendRows.length === 1) {
+          //is friend
+
+        } else {
+          //is nonesense
+          res.send();
+        }
+      });
+    }
+  });
 
 
   res.writeHead(200, { 'Content-Type': 'text/xml' });

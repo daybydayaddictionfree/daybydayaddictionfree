@@ -6,12 +6,11 @@ const authToken = key;
 // require the Twilio module and create a REST client
 const client = require('twilio')(accountSid, authToken);
 
-const send = (number) => {
-  number = "+" + number;
+const send = (telNumber, message) => {
   client.messages.create({
-    to: number,
+    to: telNumber,
     from: '+14156809196',
-    body: 'Please respond with a 1 or 2. 1 meaning yes you have smoked today, 2 meaning no you have not smoked today.',
+    body: message,
   }, (err, message) => {
     console.log(err);
   });
@@ -23,25 +22,20 @@ const sendSmokers = () => {
   });
 };
 
-const sendInvalid = (number) => {
-  client.messages.create({
-    to: number,
-    from: '+14156809196',
-    body: 'Invalid response, please reply with a 1 or 2.',
-  }, (err, message) => {
-    console.log(err);
-  });
-};
-
-const sendUserFriendMessage = (number, message) => {
-  client.messages.create({
-    to: number,
-    from: '+14156809196',
-    body: message,
-  }, (err, message) => {
-    console.log(err);
+const sendStatusToFriends = (status, telNumbers, smokerName) => {
+  let message = '';
+  if (status === '1'){
+    message = smokerName + ' did not smoke a cigarette today.';
+  } else if (status === '2') {
+    message = smokerName + ' smoked a cigarette today.';
+  } else {
+    return;
+  }
+  telNumbers.forEach((telNumber) => {
+    send(telNumber.phone, message);
   });
 };
 
 
-module.exports = sendSmokers;
+module.exports.sendSmokers = sendSmokers;
+module.exports.sendStatusToFriends = sendStatusToFriends;

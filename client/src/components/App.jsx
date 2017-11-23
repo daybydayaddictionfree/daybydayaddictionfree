@@ -14,7 +14,10 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: true,
+      loggedIn: false,
+      name: '',
+      progress: 0,
+      messages: [],
       profileObj: {},
       tokenId: '',
       signIn: false,
@@ -85,7 +88,12 @@ class App extends React.Component {
             console.log('DATA BACK HOME', response.data);
             this.setState({
               // update progress, messages, etc
+<<<<<<< HEAD
               profileObj: response.data,
+=======
+              name: response.data.name,
+              progress: response.data.progress,
+>>>>>>> made some refactoring to improve home page
               messages: response.data.messages,
               loggedIn: true,
             });
@@ -113,8 +121,8 @@ class App extends React.Component {
             Send check-in messages to users
           </button>
           <Switch>
-            <Redirect to="/home" />
             <Route exact path="/home" render={this.homePage} />
+            <Redirect to="/home" />
           </Switch>
         </div>
       );
@@ -125,8 +133,8 @@ class App extends React.Component {
             Click to console log user credentials
           </button>
           <Switch>
-            <Redirect to="/home" />
             <Route exact path="/home" render={this.homePage} />
+            <Redirect to="/home" />
           </Switch>
         </div>
       );

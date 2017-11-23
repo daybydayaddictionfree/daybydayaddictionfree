@@ -39,6 +39,7 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
                 userData.messages = result.rows;
 
                 // Send info and messages back to client
+
                 res.send(userData);
               })
               .catch((err) => {
@@ -118,11 +119,12 @@ app.post('/admin', cookiesMiddleWare(), (req, res) => {
 
 });
 
-app.post('/sms', function(req, res) {
-  console.log(req.body.Body);
-  // twilio = require('twilio');
-  let twiml = new twilio.twiml.MessagingResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
+app.post('/sms', (req, res) => {
+  var message = req.body.Body;
+  var number = req.body.From;
+
+
+
   res.writeHead(200, { 'Content-Type': 'text/xml' });
   res.end('');
 });

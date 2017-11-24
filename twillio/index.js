@@ -39,5 +39,6 @@ const sendStatusToFriends = (status, telNumbers, smokerName) => {
 };
 
 
+module.exports.send = send;
 module.exports.sendSmokers = sendSmokers;
 module.exports.sendStatusToFriends = sendStatusToFriends;

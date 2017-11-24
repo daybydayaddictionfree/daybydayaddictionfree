@@ -56,6 +56,10 @@ const updateSmokerRecord = (status, smokerId, priorProgress) => {
   }
 };
 
+const updateMessages = (message, smokerID, friendID) => {
+  query('INSERT INTO messages(text, id_smokers, id_friends) VALUES ($1, $2, $3)', [message, smokerID, friendID]);
+};
+
 
 module.exports.insertSmoker = insertSmoker;
 module.exports.insertFriends = insertFriends;
@@ -77,4 +81,6 @@ module.exports.retrieveFriendOnNum = retrieveFriendOnNum;
 module.exports.retrieveUserOnId = retrieveUserOnId;
 
 module.exports.updateSmokerRecord = updateSmokerRecord;
+
+module.exports.updateMessages = updateMessages;
 

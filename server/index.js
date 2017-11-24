@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const parser = require('body-parser');
 let twilio = require('twilio');
-let sendSmokers = require('../twillio/index');
+const { send, sendStatusToFriends, sendSmokerCheckins } = require('../twilio/index');
 const q = require('../database/queries');
 const utils = require('./utils');
 
@@ -18,11 +18,6 @@ const app = express();
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
-
-app.get('/sendcheckins', (req, res) => {
-  sendSmokers();
-  res.send();
-});
 
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
@@ -57,6 +52,12 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
         res.send(false);
       }
     });
+});
+
+app.get('/sendcheckins', cookiesMiddleWare(), (req, res) => {
+  console.log('Serving request type ', req.method, ' from ', req.path);
+  sendSmokerCheckins();
+  res.send();
 });
 
 app.post('/login', cookiesMiddleWare(), (req, res) => {
@@ -120,37 +121,37 @@ app.get('*', cookiesMiddleWare(), (req, res) => {
   // console.log(req.universalCookies.get('dbd-session-cookie'));
   res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
 });
-app.post('/admin', cookiesMiddleWare(), (req, res) => {
 
-});
-
+// Handle inbound text messages received via Twilio
 app.post('/sms', (req, res) => {
-  var message = req.body.Body;
-  var number = req.body.From;
+  const message = req.body.Body;
+  const number = req.body.From;
+
+  // Check to see if tel number belongs to smoker and handle accordingly
   q.retrieveUserOnNum(number).then(({ rows }) => {
     if (rows.length === 1) {
       console.log('I am a smoker');
-      //is smooker
       let userRow = rows[0];
       let friends = [];
       q.retrieveFriendsOnId(userRow.id).then(({ rows }) => {
         friends = rows;
-        twillioSend.sendStatusToFriends(message, rows, userRow.name);
+        sendStatusToFriends(message, rows, userRow.name);
         q.updateSmokerRecord(message, userRow.id, userRow.progress);
       });
 
     } else {
+      // check to see if tel number belongs to friend and handle accordingly
       q.retrieveFriendOnNum(number).then(({ rows }) => {
         if (rows.length === 1) {
-          //is friend
+          // is friend
           let friend = rows[0];
           q.retrieveUserOnId(friend.id_smokers).then(({ rows }) => {
             let user = rows[0];
-            twillioSend.send(user.phone, message);
+            send(user.phone, message + ' -' + friend.name);
             q.updateMessages(message, user.id, friend.id);
           });
         } else {
-          //is nonesense
+          // is nonsense
           res.send();
         }
       });

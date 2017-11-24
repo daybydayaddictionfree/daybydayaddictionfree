@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from 'react-style-tag';
 import GoogleLogin from "react-google-login";
-import GoogleId from "../../../keysAndIds/GoogleId.js";
+import GoogleId from "../../../keysAndIds/GoogleId";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -22,125 +22,71 @@ class SignUp extends React.Component {
     this.Friend1Num = this.Friend1Num.bind(this);
     this.Friend2Num = this.Friend2Num.bind(this);
     this.Friend3Num = this.Friend3Num.bind(this);
+  }
 
+  userNum(e) {
+    this.setState({ userNum: e.target.value });
   }
-  userNum(e){
-    this.setState({userNum: e.target.value});
+  Friend1(e) {
+    this.setState({ Friend1: e.target.value });
   }
-  Friend1(e){
-    this.setState({Friend1: e.target.value});
+  Friend2(e) {
+    this.setState({ Friend2: e.target.value });
   }
-  Friend2(e){
-    this.setState({Friend2: e.target.value});
+  Friend3(e) {
+    this.setState({ Friend3: e.target.value });
   }
-  Friend3(e){
-    this.setState({Friend3: e.target.value});
+  Friend1Num(e) {
+    this.setState({ Friend1Num: e.target.value });
   }
-  Friend1Num(e){
-    this.setState({Friend1Num: e.target.value});
+  Friend2Num(e) {
+    this.setState({ Friend2Num: e.target.value });
   }
-  Friend2Num(e){
-    this.setState({Friend2Num: e.target.value});
-  }
-  Friend3Num(e){
-    this.setState({Friend3Num: e.target.value});
+  Friend3Num(e) {
+    this.setState({ Friend3Num: e.target.value });
   }
   render() {
- 
-           return ( 
-   
-            <div>
+    return (
+      <div>
+        <h2>Signup Form</h2>
+        <div className="sign-container">
+          <label><b>User number#</b></label>
+          <input type="text" placeholder="Enter Number" onChange={this.userNum} />
 
-                <Style>{`
-                    /* Full-width input fields */
-                    input[type=text], input[type=password] {
-                        width: 100%;
-                        padding: 12px 20px;
-                        margin: 8px 0;
-                        display: inline-block;
-                        border: 1px solid #ccc;
-                        box-sizing: border-box;
-                    }
+          <label><b>Friend 1</b></label>
+          <input type="text" placeholder="Enter Name" onChange={this.Friend1} />
 
-                    /* Set a style for all buttons */
-                    button {
-                        background-color: #4CAF50;
-                        color: white;
-                        padding: 14px 20px;
-                        margin: 8px 0;
-                        border: none;
-                        cursor: pointer;
-                        width: 100%;
-                    }
+          <label><b>Friend 1 number#</b></label>
+          <input type="text" placeholder="Enter Number" onChange={this.Friend1Num} />
 
-                    /* Extra styles for the cancel button */
-                    .cancelbtn {
-                        padding: 14px 20px;
-                        background-color: #f44336;
-                    }
+          <label><b>Friend 2</b></label>
+          <input type="text" placeholder="Enter Name" onChange={this.Friend2} />
 
-                    /* Float cancel and signup buttons and add an equal width */
-                    .cancelbtn,.signupbtn {
-                        float: left;
-                        width: 50%;
-                    }
+          <label><b>Friend 2 number#</b></label>
+          <input type="text" placeholder="Enter Number" onChange={this.Friend2Num} />
 
-                    /* Add padding to container elements */
-                    .container {
-                        padding: 16px;
-                    }
+          <label><b>Friend 3</b></label>
+          <input type="text" placeholder="Enter Name" onChange={this.Friend3} />
 
-                    /* Clear floats */
-                    .clearfix::after {
-                        content: "";
-                        clear: both;
-                        display: table;
-                    }
+          <label><b>Friend 3 number#</b></label>
+          <input type="text" placeholder="Enter Number" onChange={this.Friend3Num} />
 
-                    /* Change styles for cancel button and signup button on extra small screens */
-                    @media screen and (max-width: 300px) {
-                        .cancelbtn, .signupbtn {
-                            width: 100%;
-                        }
-                    }
-                `}
-                </Style>
-                <h2>Signup Form</h2>
-
-
-                <div className="container">
-                <label><b>User number#</b></label>
-                <input type="text" placeholder="Enter Number" onChange={this.userNum} />
-
-                <label><b>Friend 1</b></label>
-                <input type="text" placeholder="Enter Name" onChange={this.Friend1} />
-
-                <label><b>Friend 1 number#</b></label>
-                <input type="text" placeholder="Enter Number" onChange={this.Friend1Num} />
-
-                <label><b>Friend 2</b></label>
-                <input type="text" placeholder="Enter Name" onChange={this.Friend2} />
-
-                <label><b>Friend 2 number#</b></label>
-                <input type="text" placeholder="Enter Number" onChange={this.Friend2Num} />
-
-                <label><b>Friend 3</b></label>
-                <input type="text" placeholder="Enter Name" onChange={this.Friend3} />
-
-                <label><b>Friend 3 number#</b></label>
-                <input type="text" placeholder="Enter Number" onChange={this.Friend3Num} />
-
-
-                <div className="clearfix">
-                    <button type="button" className="cancelbtn">Cancel</button>
-                    <button type="submit" className="signupbtn" disabled= {!this.state.userNum || !this.state.Friend1 || !this.state.Friend2 || !this.state.Friend3 || !this.state.Friend1Num || !this.state.Friend2Num || !this.state.Friend3Num} onClick = {() => {
-                    this.props.createUser(this.state);
-                    }}>Sign Up</button>
-                </div>
-                </div>
-            </div>
-            );
-
+          <div className="clearfix">
+            <button type="button" className="cancelbtn">Cancel</button>
+            <button
+              type="submit"
+              className="signupbtn"
+              disabled={!this.state.userNum || !this.state.Friend1 || !this.state.Friend2 ||
+                !this.state.Friend3 || !this.state.Friend1Num || !this.state.Friend2Num || !this.state.Friend3Num}
+              onClick={() => {
+                this.props.createUser(this.state);
+              }}
+            >Sign Up
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 

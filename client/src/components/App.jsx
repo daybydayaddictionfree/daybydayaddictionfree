@@ -87,8 +87,7 @@ class App extends React.Component {
           if (response.data !== false) {
             console.log('DATA BACK HOME', response.data);
             this.setState({
-              // update progress, messages, etc
-              
+              // update progress, messages, etc 
               profileObj: response.data,
               name: response.data.name,
               progress: response.data.progress,

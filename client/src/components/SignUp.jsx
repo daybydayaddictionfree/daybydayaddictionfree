@@ -1,7 +1,6 @@
 import React from 'react';
-import Style from 'react-style-tag';
-import GoogleLogin from "react-google-login";
-import GoogleId from "../../../keysAndIds/GoogleId";
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -47,42 +46,53 @@ class SignUp extends React.Component {
   }
   render() {
     return (
-      <div>
-        <h2>Signup Form</h2>
-        <div className="sign-container">
-          <label><b>User number#</b></label>
-          <input type="text" placeholder="Enter Number" onChange={this.userNum} />
-
-          <label><b>Friend 1</b></label>
-          <input type="text" placeholder="Enter Name" onChange={this.Friend1} />
-
-          <label><b>Friend 1 number#</b></label>
-          <input type="text" placeholder="Enter Number" onChange={this.Friend1Num} />
-
-          <label><b>Friend 2</b></label>
-          <input type="text" placeholder="Enter Name" onChange={this.Friend2} />
-
-          <label><b>Friend 2 number#</b></label>
-          <input type="text" placeholder="Enter Number" onChange={this.Friend2Num} />
-
-          <label><b>Friend 3</b></label>
-          <input type="text" placeholder="Enter Name" onChange={this.Friend3} />
-
-          <label><b>Friend 3 number#</b></label>
-          <input type="text" placeholder="Enter Number" onChange={this.Friend3Num} />
-
-          <div className="clearfix">
-            <button type="button" className="cancelbtn">Cancel</button>
-            <button
-              type="submit"
+      <div className="sign-up-container">
+        <div>
+          <h2 className="sign-up-title">Sign up </h2>     
+          <TextField
+            hintText="Your Phone Number"
+            onChange={this.userNum}
+          /><br />
+          <TextField
+            hintText="Name"
+            floatingLabelText="Friend #1 Name"
+            onChange={this.Friend1}
+          /><br />
+          <TextField
+            hintText="Phone Number"
+            floatingLabelText="Friend #1 Phone number"
+            onChange={this.Friend1Num}
+          /><br />
+          <TextField
+            hintText="Name"
+            floatingLabelText="Friend #2 Name"
+            onChange={this.Friend2}
+          /><br />
+          <TextField
+            hintText="Phone Number"
+            floatingLabelText="Friend #2 Phone number"
+            onChange={this.Friend2Num}
+          /><br />
+          <TextField
+            hintText="Name"
+            floatingLabelText="Friend #3 Name"
+            onChange={this.Friend3}
+          /><br />
+          <TextField
+            hintText="Phone Number"
+            floatingLabelText="Friend #3 Phone number"
+            onChange={this.Friend3Num}
+          /><br />
+          <div className="btn-box">
+            <FlatButton
+              label="Create account"
+              backgroundColor="#3CB371"
               className="signupbtn"
-              disabled={!this.state.userNum || !this.state.Friend1 || !this.state.Friend2 ||
-                !this.state.Friend3 || !this.state.Friend1Num || !this.state.Friend2Num || !this.state.Friend3Num}
-              onClick={() => {
-                this.props.createUser(this.state);
-              }}
-            >Sign Up
-            </button>
+              disabled={!this.state.userNum || !this.state.Friend1 ||
+              !this.state.Friend2 || !this.state.Friend3 || !this.state.Friend1Num ||
+              !this.state.Friend2Num || !this.state.Friend3Num}
+              onClick={() => { this.props.createUser(this.state); }}
+            />
           </div>
         </div>
       </div>

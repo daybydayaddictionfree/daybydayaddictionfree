@@ -1,6 +1,6 @@
 # Day by Day Smoke Free
 
-[(http://cdn2.collective-evolution.com/assets/uploads/2015/09/smoker-759x500.png)]
+(http://cdn2.collective-evolution.com/assets/uploads/2015/09/smoker-759x500.png)
 
 > DBDSF is an application to help people quit smoking through connection. It takes two things to work: 1) a desire to quit smoking and 2) three friends.
 

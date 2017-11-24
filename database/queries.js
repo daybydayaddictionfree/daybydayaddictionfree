@@ -37,11 +37,6 @@ const retrieveUserOnNum = (number =>
 const retrieveFriendsOnId = (UserId =>
   query('SELECT * from friends WHERE id_smokers=$1', [UserId]));
 
-
-
-
-
-
 const retrieveFriendOnNum = (number =>
   query('SELECT * from friends WHERE phone=$1', [number]));
 
@@ -60,27 +55,25 @@ const updateMessages = (message, smokerID, friendID) => {
   query('INSERT INTO messages(text, id_smokers, id_friends) VALUES ($1, $2, $3)', [message, smokerID, friendID]);
 };
 
+const getAllSmokerTelNumbers = () =>
+  query('SELECT name, phone FROM smokers');
 
 module.exports.insertSmoker = insertSmoker;
 module.exports.insertFriends = insertFriends;
 module.exports.insertMessage = insertMessage;
 module.exports.checkEmail = checkEmail;
 module.exports.checkCookie = checkCookie;
+module.getAllSmokerTelNumbers = getAllSmokerTelNumbers;
 module.exports.insertCookie = insertCookie;
 module.exports.retrieveUserInfo = retrieveUserInfo;
 module.exports.retrieveMessages = retrieveMessages;
 module.exports.removeCookie = removeCookie;
-
-
 module.exports.retrieveUserOnNum = retrieveUserOnNum;
-
 module.exports.retrieveFriendsOnId = retrieveFriendsOnId;
-
 module.exports.retrieveFriendOnNum = retrieveFriendOnNum;
-
 module.exports.retrieveUserOnId = retrieveUserOnId;
-
 module.exports.updateSmokerRecord = updateSmokerRecord;
 
 module.exports.updateMessages = updateMessages;
 
+module.exports.getAllSmokerTelNumbers = getAllSmokerTelNumbers;

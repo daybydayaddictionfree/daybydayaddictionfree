@@ -95,6 +95,7 @@ class App extends React.Component {
               messages: response.data.messages,
               admin: response.data.admin,
               loggedIn: true,
+              signIn: false,
             });
           }
         });

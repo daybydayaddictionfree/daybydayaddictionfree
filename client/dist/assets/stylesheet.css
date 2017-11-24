@@ -107,6 +107,12 @@ input[type=text], input[type=password] {
     background-color: #f44336;
 }
 
+.signupbtn {
+  background-color: #4CAF50;
+  padding: 14px 20px;
+  color: white;
+
+}
 /* Float cancel and signup buttons and add an equal width */
 .cancelbtn,.signupbtn {
     float: left;

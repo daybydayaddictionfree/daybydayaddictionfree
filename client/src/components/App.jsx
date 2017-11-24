@@ -30,6 +30,7 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
     this.responseGoogle = this.responseGoogle.bind(this);
     this.onClickSignUpSmoker = this.onClickSignUpSmoker.bind(this);
+    this.signUp = this.signUp.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +53,7 @@ class App extends React.Component {
   logout() {
     this.setState({
       loggedIn: false,
+      signIn: false,
     });
   }
 
@@ -142,7 +144,8 @@ class App extends React.Component {
       return (
         <div>
           <Switch>
-            <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.props.profileObj} />} />
+            <Route exact path="/signup" render={this.signUp} />
+            {/* <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.props.profileObj} />} /> */}
             <Redirect to="/signup" />
           </Switch>
         </div>
@@ -167,8 +170,6 @@ class App extends React.Component {
     );
   }
 }
-
-
 
 
 export default App;

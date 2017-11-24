@@ -141,9 +141,14 @@ app.post('/sms', (req, res) => {
 
     } else {
       q.retrieveFriendOnNum(number).then(({ rows }) => {
-        if (friendRows.length === 1) {
+        if (rows.length === 1) {
           //is friend
-
+          let friend = rows[0];
+          q.retrieveUserOnId(friend.id_smokers).then(({ rows }) => {
+            let user = rows[0];
+            twillioSend.send(user.phone, message);
+            q.updateMessages(message, user.id, friend.id);
+          });
         } else {
           //is nonesense
           res.send();

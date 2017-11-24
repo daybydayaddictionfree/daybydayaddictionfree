@@ -1,4 +1,4 @@
-const { key, sid } = require('../keysAndIds/twillioKey');
+const { key, sid } = require('../keysAndIds/twilioKey');
 const { getAllSmokerTelNumbers } = require('../database/queries');
 const twilio = require('twilio');
 
@@ -23,7 +23,7 @@ const sendSmokerCheckins = () => {
   getAllSmokerTelNumbers()
     .then(({ rows }) => {
       rows.forEach((row) => {
-        const message = 'Hi ' + row.name + ', have you smoked a cigarette since our last check-in? \'1\' for YES, \'2\' for NO';
+        const message = 'Hi ' + row.name + ', have you smoked a cigarette since our last check-in? \'1\' for NO, \'2\' for YES';
         send(row.phone, message);
       });
     });
@@ -45,3 +45,4 @@ const sendStatusToFriends = (status, telNumbers, smokerName) => {
 
 module.exports.sendSmokerCheckins = sendSmokerCheckins;
 module.exports.sendStatusToFriends = sendStatusToFriends;
+module.exports.send = send;

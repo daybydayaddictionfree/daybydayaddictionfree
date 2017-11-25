@@ -30,7 +30,6 @@ const retrieveMessages = (id =>
 const removeCookie = (token =>
   query('DELETE from cookies WHERE token=$1', [token]));
 
-
 const retrieveUserOnNum = (number =>
   query('SELECT * from smokers WHERE phone=$1', [number]));
 

@@ -1,28 +1,28 @@
 const { Client } = require('pg');
 const queries = require('../database/queries');
-const connectionString = require('../keysAndIds/db.js'); 
+const connectionString = require('../keysAndIds/db.js');
+const { client } = require('../database/index');
 
 
 describe('Persistent data storage', () => {
+  // beforeEach(function() {
 
-  beforeEach(function(done) {
+  //   const client = new Client({
+  //     connectionString,
+  //     ssl: true,
+  //   });
 
-    const client = new Client({
-      connectionString,
-      ssl: true,
-    });
-
-    client.connect()
-    .then(() => console.log('Connected to testing postgresql database!'))
-    .catch(e => console.log('connection error: ', e));
+  //   client.connect()
+  //   .then(() => console.log('Connected to testing postgresql database!'))
+  //   .catch(e => console.log('connection error: ', e));
    
-  });
+  // });
 
-  afterEach(() => {
-    client.end();
-  });
+  // afterEach(() => {
+  //   client.end();
+  // });
 
-  it('should insert new smokers into the DB', (done) => {
+  it('should insert new smokers into the DB', () => {
     const smoker = {
       name: 'Lebron',
       userNum: '+15555555555',
@@ -31,11 +31,12 @@ describe('Persistent data storage', () => {
     queries.insertSmoker(smoker)
       .then((result) => {
         expect(result.rowCount).to.equal(1);
-        client.query('DELETE FROM smokers WHERE name=$1', [smoker.name]);
+        client.query('DELETE FROM smokers WHERE name=$1', [smoker.name])
+          .then();
       });
   });
 
-  it('should insert friends into the DB', (done) => {
+  it('should insert friends into the DB', () => {
     const friends = [
       ['mike', '1111111111', 1],
     ];
@@ -46,7 +47,7 @@ describe('Persistent data storage', () => {
       });
   });
 
-  it('should insert messages into the DB', (done) => {
+  it('should insert messages into the DB', () => {
     const message = ['Nice job!', '2pm', 0, 0];
     queries.insertMessage(message)
       .then((result) => {
@@ -55,7 +56,7 @@ describe('Persistent data storage', () => {
       });
   });
 
-  it('should insert a cookie into the DB', (done) => {
+  it('should insert a cookie into the DB', () => {
     const token = {
       token: 'thisisatestcookie',
       email: 'lebron@gmail.com',
@@ -68,7 +69,7 @@ describe('Persistent data storage', () => {
       });
   });
 
-  it('should retrieve messages from the db', (done) => {
+  it('should retrieve messages from the db', () => {
     const message = ['Nice job!'];
     queries.insertMessage(message)
       .then(() => {

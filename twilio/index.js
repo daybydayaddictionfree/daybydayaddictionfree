@@ -23,7 +23,7 @@ const sendSmokerCheckins = () => {
   getAllSmokerTelNumbers()
     .then(({ rows }) => {
       rows.forEach((row) => {
-        const message = 'Hi ' + row.name + ', have you smoked a cigarette since our last check-in? \'1\' for NO, \'2\' for YES';
+        const message = 'Hi ' + row.name + ', have you smoked a cigarette since our last check-in? \n\n \'1\' for NO \n \'2\' for YES';
         send(row.phone, message);
       });
     });
@@ -31,10 +31,10 @@ const sendSmokerCheckins = () => {
 
 const sendStatusToFriends = (status, telNumbers, smokerName) => {
   let message = '';
-  if (status === '1'){
-    message = smokerName + ' did not smoke a cigarette today.';
+  if (status === '1') {
+    message = smokerName + ' did not smoke a cigarette today. Reply with a supportive message to them here.';
   } else if (status === '2') {
-    message = smokerName + ' smoked a cigarette today.';
+    message = smokerName + ' smoked a cigarette today. Reply with a supportive message to them here.';
   } else {
     return;
   }

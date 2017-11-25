@@ -21,7 +21,7 @@ class App extends React.Component {
       signIn: false,
       messages: [],
       progress: 0,
-      admin: true,
+      admin: false,
     };
 
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -53,7 +53,13 @@ class App extends React.Component {
   logout() {
     this.setState({
       loggedIn: false,
+      name: '',
+      profileObj: {},
+      tokenId: '',
       signIn: false,
+      messages: [],
+      progress: 0,
+      admin: false,
     });
   }
 
@@ -87,7 +93,7 @@ class App extends React.Component {
           if (response.data !== false) {
             console.log('DATA BACK HOME', response.data);
             this.setState({
-              // update progress, messages, etc 
+              // update progress, messages, etc
               profileObj: response.data,
               name: response.data.name,
               progress: response.data.progress,
@@ -145,7 +151,6 @@ class App extends React.Component {
         <div>
           <Switch>
             <Route exact path="/signup" render={this.signUp} />
-            {/* <Route exact path="/signup" render={() => <SignUp createUser={this.onClickSignUpSmoker} profile={this.props.profileObj} />} /> */}
             <Redirect to="/signup" />
           </Switch>
         </div>

@@ -17,11 +17,6 @@ describe('Persistent data storage', () => {
     .then(() => console.log('Connected to testing postgresql database!'))
     .catch(e => console.log('connection error: ', e));
    
-    // clear the database
-    client.query('DELETE FROM smokers');
-    client.query('DELETE FROM friends');
-    client.query('DELETE FROM messages');
-    client.query('DELETE FROM cookies');
   });
 
   afterEach(() => {
@@ -36,7 +31,7 @@ describe('Persistent data storage', () => {
     };
     queries.insertSmoker(smoker)
       .then((result)=> {
-        expect(result.length).to.equal(1);
+        expect(result.rowCount).to.equal(1);
       });
   });
 
@@ -48,7 +43,7 @@ describe('Persistent data storage', () => {
     ];
     queries.insertFriends(friends)
       .then((result) => {
-        expect(result.length).to.equal(1);
+        expect(result.rowCount).to.equal(1);
       });
   })
 
@@ -56,7 +51,7 @@ describe('Persistent data storage', () => {
     const message = ['Nice job!', '2pm', 1, 1];
     queries.insertMessage(message)
       .then((result) => {
-        expect(result.length).to.equal(1);
+        expect(result.rowCount).to.equal(1);
       });
   });
 
@@ -68,7 +63,7 @@ describe('Persistent data storage', () => {
     };
     queries.insertCookie(token)
       .then((result) => {
-        expect(result.length).to.equal(1);
+        expect(result.rowCount).to.equal(1);
       });
   });
 
@@ -78,8 +73,9 @@ describe('Persistent data storage', () => {
       .then(() => {
         queries.retrieveMessages(1)
           .then((result) => {
-            expect(result.length).to.equal(1);
+            expect(result.rowCount).to.equal(1);
           });
       });
   });
 });
+

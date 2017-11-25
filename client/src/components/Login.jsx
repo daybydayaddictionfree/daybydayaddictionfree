@@ -6,7 +6,7 @@ import GoogleId from '../../../keysAndIds/GoogleId';
 const Login = props => (
   <GoogleLogin
     clientId={GoogleId}
-    buttonText="Login using Google"
+    buttonText={props.buttonText}
     onSuccess={props.responseGoogle}
     onFailure={() => {
       console.log('FAILURE__________________');
@@ -15,4 +15,3 @@ const Login = props => (
 );
 
 export default Login;
-

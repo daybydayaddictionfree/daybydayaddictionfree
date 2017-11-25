@@ -78,17 +78,37 @@ body {
 
 /*
   ==============================
-  Messages Styling
+  Landing Page Styling
   ==============================
 */
 
+h1 {
+  line-height: 50px;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.landing-section {
+  height: 200px;
+  padding: 125px;
+  text-align: center;
+}
+
+.btn-right {
+  float: right;
+}
+
+/*
+  ==============================
+  Messages Styling
+  ==============================
+*/
 .message {
   background-color: #e9ece5;
   box-shadow: 10px 10px 5px #888888;
   width: 66%;
   margin: auto;
 }
-
 
 .signupbtn {
   background-color: #4CAF50;

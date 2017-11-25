@@ -1,16 +1,15 @@
 const { Client } = require('pg');
 const queries = require('../database/queries');
+const connectionString = require('../keysAndIds/db.js'); 
 
 
 describe('Persistent data storage', () => {
 
   beforeEach(function(done) {
-    // TODO update with your local database information
+
     const client = new Client({
-      user: 'jasonborer',
-      host: 'localhost',
-      password: '',
-      database: 'example',
+      connectionString,
+      ssl: true,
     });
 
     client.connect()
@@ -30,28 +29,29 @@ describe('Persistent data storage', () => {
       email: 'lebron@gmail.com',
     };
     queries.insertSmoker(smoker)
-      .then((result)=> {
+      .then((result) => {
         expect(result.rowCount).to.equal(1);
+        client.query('DELETE FROM smokers WHERE name=$1', [smoker.name]);
       });
   });
 
   it('should insert friends into the DB', (done) => {
     const friends = [
       ['mike', '1111111111', 1],
-      ['john', '2222222222', 1],
-      ['Jorge', '3333333333', 1],
     ];
     queries.insertFriends(friends)
       .then((result) => {
         expect(result.rowCount).to.equal(1);
+        client.query('DELETE FROM friends WHERE name=$1', [friends[0][0]]);
       });
-  })
+  });
 
   it('should insert messages into the DB', (done) => {
-    const message = ['Nice job!', '2pm', 1, 1];
+    const message = ['Nice job!', '2pm', 0, 0];
     queries.insertMessage(message)
       .then((result) => {
         expect(result.rowCount).to.equal(1);
+        client.query('DELETE FROM messages WHERE timestamp=$1', [message[1]]);
       });
   });
 
@@ -64,6 +64,7 @@ describe('Persistent data storage', () => {
     queries.insertCookie(token)
       .then((result) => {
         expect(result.rowCount).to.equal(1);
+        client.query('DELETE FROM cookies WHERE token=$1', [token.token]);
       });
   });
 

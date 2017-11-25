@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -47,11 +48,21 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="sign-up-container">
-        <div>
-          <h2 className="sign-up-title">Sign up </h2>     
+        <Paper 
+          zDepth={2}
+        >
+        <div className="input-container">
+          <h2 className="sign-up-title">Sign up </h2>
           <TextField
-            hintText="Your Phone Number"
+            value="Your Phone Number"
+            className
+            /><br />
+          <TextField
+            hintText="+1xxxxxxxxxx"
             onChange={this.userNum}
+          /><br />
+          <TextField
+            value="Friend's information"
           /><br />
           <TextField
             hintText="Name"
@@ -88,6 +99,7 @@ class SignUp extends React.Component {
               label="Create account"
               backgroundColor="#3CB371"
               className="signupbtn"
+              style={{ margin: '0 0 10px 40px' }}
               disabled={!this.state.userNum || !this.state.Friend1 ||
               !this.state.Friend2 || !this.state.Friend3 || !this.state.Friend1Num ||
               !this.state.Friend2Num || !this.state.Friend3Num}
@@ -95,6 +107,7 @@ class SignUp extends React.Component {
             />
           </div>
         </div>
+        </Paper>
       </div>
     );
   }

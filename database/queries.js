@@ -25,7 +25,7 @@ const retrieveUserInfo = (id =>
   query('SELECT * FROM smokers WHERE id=$1', [id]));
 
 const retrieveMessages = (id =>
-  query('SELECT * from messages INNER JOIN friends ON friends.id=messages.id_friends WHERE messages.id_smokers=$1', [id]));
+  query('SELECT messages.id, friends.name, messages.text from messages INNER JOIN friends ON friends.id=messages.id_friends WHERE messages.id_smokers=$1', [id]));
 
 const removeCookie = (token =>
   query('DELETE from cookies WHERE token=$1', [token]));
@@ -63,7 +63,6 @@ module.exports.insertFriends = insertFriends;
 module.exports.insertMessage = insertMessage;
 module.exports.checkEmail = checkEmail;
 module.exports.checkCookie = checkCookie;
-module.getAllSmokerTelNumbers = getAllSmokerTelNumbers;
 module.exports.insertCookie = insertCookie;
 module.exports.retrieveUserInfo = retrieveUserInfo;
 module.exports.retrieveMessages = retrieveMessages;
@@ -73,7 +72,5 @@ module.exports.retrieveFriendsOnId = retrieveFriendsOnId;
 module.exports.retrieveFriendOnNum = retrieveFriendOnNum;
 module.exports.retrieveUserOnId = retrieveUserOnId;
 module.exports.updateSmokerRecord = updateSmokerRecord;
-
 module.exports.updateMessages = updateMessages;
-
 module.exports.getAllSmokerTelNumbers = getAllSmokerTelNumbers;

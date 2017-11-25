@@ -26,7 +26,7 @@ const HomePage = (props) => {
       />
       <h1 style={{ textAlign: 'center' }} >{props.userState.profileObj.name} </h1>
       <ProgressBar progress={props.userState.progress} />
-      <MessageList messages={props.messages} />
+      <MessageList messages={props.userState.messages} />
     </div>
   );
 }

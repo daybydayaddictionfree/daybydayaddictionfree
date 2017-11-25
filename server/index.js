@@ -39,7 +39,7 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
                 userData.messages = result.rows;
 
                 // Send info and messages back to client
-
+                console.log(userData);
                 res.send(userData);
               })
               .catch((err) => {

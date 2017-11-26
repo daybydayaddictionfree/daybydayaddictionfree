@@ -5,12 +5,13 @@ const ProgressBar = ({ progress }) => (
   <div>
     <div>
       {progress > 0 ?
-      <p className="progress-comment">Congrats on not smoking for {progress} days! </p> : <p className="progress-comment">Your smoke free life begins now!</p>}
+        <p className="progress-comment">Congrats! You haven't smoked in {progress} days! </p> :
+        <p className="progress-comment">Your smoke free life begins now!</p>}
     </div>
     <div className="progress-container">
       <div className="axis">0</div>
       <LinearProgress
-        style={{ width: '66%', margin: '5px auto' }}
+        style={{ width: '50%', margin: '30px 5px', height: '10px' }}
         mode="determinate"
         max={60}
         value={progress}

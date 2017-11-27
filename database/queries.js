@@ -54,8 +54,13 @@ const updateMessages = (message, smokerID, friendID) => {
   query('INSERT INTO messages(text, id_smokers, id_friends) VALUES ($1, $2, $3)', [message, smokerID, friendID]);
 };
 
-const getAllSmokerTelNumbers = () =>
-  query('SELECT name, phone FROM smokers');
+const getAllSmokerTelNumbers = () => {
+  query('UPDATE smokers SET progress=0 WHERE responded=false')
+    .then(() => {
+      query('UPDATE smokers SET responded=false');
+    });
+  return query('SELECT name, phone FROM smokers');
+};
 
 module.exports.insertSmoker = insertSmoker;
 module.exports.insertFriends = insertFriends;

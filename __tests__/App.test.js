@@ -1,3 +1,4 @@
+import 'jest';
 import App from '../client/src/components/App.jsx';
 import HomePage from '../client/src/components/HomePage.jsx';
 import MessageList from '../client/src/components/MessageList.jsx';
@@ -64,8 +65,8 @@ describe('<Message />', () => {
 });
 
 describe('<ProgressBar />', () => {
-  it('should be a stateful component ', () => {
-    expect(React.Component.isPrototypeOf(ProgressBar)).toBe(true);
+  it('should be a stateless component ', () => {
+    expect(React.Component.isPrototypeOf(ProgressBar)).toBe(false);
   });
 
   it('should render the ProgressBar component ', () => {

@@ -6,23 +6,6 @@ const { client } = require('../database/index');
 
 
 describe('Persistent data storage', () => {
-  // beforeEach(function() {
-
-  //   const client = new Client({
-  //     connectionString,
-  //     ssl: true,
-  //   });
-
-  //   client.connect()
-  //   .then(() => console.log('Connected to testing postgresql database!'))
-  //   .catch(e => console.log('connection error: ', e));
-   
-  // });
-
-  // afterEach(() => {
-  //   client.end();
-  // });
-
   it('should insert new smokers into the DB', () => {
     const smoker = {
       name: 'Lebron',

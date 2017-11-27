@@ -1,4 +1,5 @@
 const { Client } = require('pg');
+const jest = require('jest');
 const queries = require('../database/queries');
 const connectionString = require('../keysAndIds/db.js');
 const { client } = require('../database/index');
@@ -69,7 +70,7 @@ describe('Persistent data storage', () => {
       });
   });
 
-  it('should retrieve messages from the db', () => {
+  it('should retrieve messages from the DB', () => {
     const message = ['Nice job!'];
     queries.insertMessage(message)
       .then(() => {

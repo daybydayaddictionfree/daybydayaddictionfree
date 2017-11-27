@@ -6,7 +6,6 @@ let twilio = require('twilio');
 const { send, sendStatusToFriends, sendSmokerCheckins } = require('../twilio/index');
 const q = require('../database/queries');
 const utils = require('./utils');
-const tests = require('../__tests__/db.test');
 
 // Seeds table with dummy data, comment out when use real data
 const seed = require('../database/seed.js');

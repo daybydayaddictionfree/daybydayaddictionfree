@@ -20,13 +20,19 @@ const HomePage = (props) => {
 
   return (
     <div>
-      <GoogleLogout
-        buttonText="Logout"
-        onLogoutSuccess={logout}
-      />
-      <h1 style={{ textAlign: 'center' }} >{props.userState.profileObj.name} </h1>
-      <ProgressBar progress={props.userState.progress} />
-      <MessageList messages={props.userState.messages} />
+      <div className='top-row' >
+        <div className='btn-right' >
+          <GoogleLogout
+            buttonText="Logout"
+            onLogoutSuccess={logout}
+            />
+        </div>
+      </div>
+      <div>
+        <h1 style={{ textAlign: 'center' }} >{props.userState.profileObj.name} </h1>
+        <ProgressBar progress={props.userState.progress} />
+        <MessageList messages={props.userState.messages} />
+      </div>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import 'jest';
 import React from 'react';
 import { configure, mount, shallow } from 'enzyme';
 import 'raf/polyfill';
@@ -64,8 +65,8 @@ describe('<Message />', () => {
 });
 
 describe('<ProgressBar />', () => {
-  it('should be a stateful component ', () => {
-    expect(React.Component.isPrototypeOf(ProgressBar)).toBe(true);
+  it('should be a stateless component ', () => {
+    expect(React.Component.isPrototypeOf(ProgressBar)).toBe(false);
   });
 
   it('should render the ProgressBar component ', () => {

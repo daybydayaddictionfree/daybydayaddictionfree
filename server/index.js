@@ -123,6 +123,7 @@ app.post('/sms', (req, res) => {
   const message = req.body.Body;
   const number = req.body.From;
 
+  console.log('Serving request type ', req.method, ' from ', req.path);
   // Check to see if tel number belongs to smoker and handle accordingly
   q.retrieveUserOnNum(number).then(({ rows }) => {
     if (rows.length === 1) {
@@ -134,7 +135,6 @@ app.post('/sms', (req, res) => {
         sendStatusToFriends(message, rows, userRow.name);
         q.updateSmokerRecord(message, userRow.id, userRow.progress);
       });
-
     } else {
       // check to see if tel number belongs to friend and handle accordingly
       q.retrieveFriendOnNum(number).then(({ rows }) => {

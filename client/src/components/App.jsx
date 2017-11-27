@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 import HomePage from './HomePage';
 import Login from './Login';
 import SignUp from './SignUp';
-import LandingPage from './LandingPage';
+import LandingPage from './LandingPage.jsx';
 
 const cookies = new Cookies();
 
@@ -31,6 +31,7 @@ class App extends React.Component {
     this.responseGoogle = this.responseGoogle.bind(this);
     this.onClickSignUpSmoker = this.onClickSignUpSmoker.bind(this);
     this.signUp = this.signUp.bind(this);
+    this.landingPage = this.landingPage.bind(this);
   }
 
   componentDidMount() {
@@ -123,6 +124,12 @@ class App extends React.Component {
     );
   }
 
+  landingPage() {
+    return (
+      <LandingPage responseGoogle={this.responseGoogle} />
+    );
+  }
+
   render() {
     if (this.state.loggedIn && this.state.admin) {
       return (
@@ -158,17 +165,15 @@ class App extends React.Component {
     }
     return (
       <div>
-        <nav>
-          <Link to="/landing" style={{ margin: "5px" }}>
-            LandingPage
-          </Link>
-
-          <Login responseGoogle={this.responseGoogle} />
-        </nav>
+        <div className='btn-right' >
+          <nav>
+            <Login buttonText='Login Using Google' responseGoogle={this.responseGoogle} />
+          </nav>
+        </div>
         <div>
           <Switch>
-            <Route exact path="/landing" component={LandingPage} />
-            <Redirect to="/" />
+            <Route exact path="/landing" render={this.landingPage} />
+            <Redirect to="/landing" />
           </Switch>
         </div>
       </div>

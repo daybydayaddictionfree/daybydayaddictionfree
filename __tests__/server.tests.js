@@ -10,7 +10,7 @@ configure({ adapter: new Adapter() });
 
 describe('DBD application server ', () => {
   it('should return false for user verifying auth with invalid cookie', () => {
-    return axios.get('http://localhost:8080/verifyauth')
+    return axios.get('http://localhost:8080/verifyAuth')
       .then((data) => {
         expect(data.data).toBe(false);
       });

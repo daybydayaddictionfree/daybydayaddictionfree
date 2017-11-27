@@ -22,24 +22,20 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
   console.log('Serving request type ', req.method, ' from ', req.path);
 
-  // Is cookie valid?
+  // Checks if cookie is valid
   q.checkCookie(req.universalCookies.get('dbd-session-cookie'))
     .then(({ rows }) => {
       // If cookie is valid..
       if (rows.length > 0) {
-        // Get user info
-
+        // Gets user info from the database
         q.retrieveUserInfo(rows[0].id_smokers)
           .then((data) => {
             const userData = data.rows[0];
-
-            // Get messages from user's friends
+            // Gets messages history from user's friends
             q.retrieveMessages(userData.id)
               .then((result) => {
                 userData.messages = result.rows;
-
-                // Send info and messages back to client
-                console.log(userData);
+                // Sends info and messages back to client
                 res.send(userData);
               })
               .catch((err) => {

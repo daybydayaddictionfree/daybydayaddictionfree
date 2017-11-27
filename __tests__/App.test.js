@@ -1,14 +1,14 @@
 import 'jest';
-import App from '../client/src/components/App.jsx';
-import HomePage from '../client/src/components/HomePage.jsx';
-import MessageList from '../client/src/components/MessageList.jsx';
-import Message from '../client/src/components/Message.jsx';
-import ProgressBar from '../client/src/components/ProgressBar.jsx';
-import Login from '../client/src/components/Login.jsx';
 import React from 'react';
 import { configure, mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import 'raf/polyfill';
+import Adapter from 'enzyme-adapter-react-16';
+import App from '../client/src/components/App';
+import HomePage from '../client/src/components/HomePage';
+import MessageList from '../client/src/components/MessageList';
+import Message from '../client/src/components/Message';
+import ProgressBar from '../client/src/components/ProgressBar';
+import Login from '../client/src/components/Login';
 import messages from './../sampleData';
 
 configure({ adapter: new Adapter() });

@@ -136,3 +136,13 @@ h1 {
 .btn-box {
   margin-top: 20px;
 }
+
+/*
+  ==============================
+  Home Page Styling
+  ==============================
+*/
+.top-row {
+  width: 100%;
+  height: 50px;
+}

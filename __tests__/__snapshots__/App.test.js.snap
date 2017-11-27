@@ -2,44 +2,22 @@
 
 exports[`<App /> should render the App component  1`] = `
 <div>
-  <nav>
-    <Link
-      replace={false}
-      style={
-        Object {
-          "margin": "5px",
-        }
-      }
-      to="/landing"
-    >
-      LandingPage
-    </Link>
-    <Link
-      replace={false}
-      style={
-        Object {
-          "margin": "5px",
-        }
-      }
-      to="/signup"
-    >
-      SigupPage
-    </Link>
-    <Login
-      responseGoogle={[Function]}
-    />
-  </nav>
+  <div
+    className="btn-right"
+  >
+    <nav>
+      <Login
+        buttonText="Login Using Google"
+        responseGoogle={[Function]}
+      />
+    </nav>
+  </div>
   <div>
     <Switch>
       <Route
-        component={[Function]}
         exact={true}
         path="/landing"
-      />
-      <Route
-        component={[Function]}
-        exact={true}
-        path="/signup"
+        render={[Function]}
       />
       <Redirect
         push={false}
@@ -52,37 +30,45 @@ exports[`<App /> should render the App component  1`] = `
 
 exports[`<HomePage /> should render the HomePage component  1`] = `
 <div>
-  <t
-    buttonText="Logout"
-    disabledStyle={
-      Object {
-        "opacity": 0.6,
-      }
-    }
-    onLogoutSuccess={[Function]}
-    onRequest={[Function]}
-    responseType="permission"
-    tag="button"
-  />
-  <h1
-    style={
-      Object {
-        "textAlign": "center",
-      }
-    }
+  <div
+    className="top-row"
   >
-    Brian
-     
-    Choe
-  </h1>
-  <ProgressBar />
-  <MessageList />
+    <div
+      className="btn-right"
+    >
+      <t
+        buttonText="Logout"
+        disabledStyle={
+          Object {
+            "opacity": 0.6,
+          }
+        }
+        onLogoutSuccess={[Function]}
+        onRequest={[Function]}
+        responseType="permission"
+        tag="button"
+      />
+    </div>
+  </div>
+  <div>
+    <h1
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+       
+    </h1>
+    <ProgressBar />
+    <MessageList />
+  </div>
 </div>
 `;
 
 exports[`<Login /> should render the Login component  1`] = `
 <t
-  buttonText="Login using Google"
+  buttonText="Login with Google"
   clientId="661794075574-q87lqva7vp50d04qv7h4dm95lhmvs3m3.apps.googleusercontent.com"
   cookiePolicy="single_host_origin"
   disabledStyle={
@@ -92,6 +78,7 @@ exports[`<Login /> should render the Login component  1`] = `
   }
   fetchBasicProfile={true}
   isSignedIn={false}
+  onFailure={[Function]}
   onRequest={[Function]}
   prompt=""
   scope="profile email"
@@ -115,8 +102,6 @@ exports[`<Message /> should render the Message component  1`] = `
 >
   <CardHeader
     avatar={null}
-    subtitle="datestring here"
-    title="Abraham Lincoln"
   />
   <CardText>
     great work, keep it up!
@@ -127,7 +112,6 @@ exports[`<Message /> should render the Message component  1`] = `
 exports[`<MessageList /> should render the MessageList component  1`] = `
 <div>
   <Message
-    key="1"
     message={
       Object {
         "_id": 1,
@@ -138,7 +122,6 @@ exports[`<MessageList /> should render the MessageList component  1`] = `
     }
   />
   <Message
-    key="2"
     message={
       Object {
         "_id": 2,
@@ -149,7 +132,6 @@ exports[`<MessageList /> should render the MessageList component  1`] = `
     }
   />
   <Message
-    key="3"
     message={
       Object {
         "_id": 3,
@@ -160,7 +142,6 @@ exports[`<MessageList /> should render the MessageList component  1`] = `
     }
   />
   <Message
-    key="4"
     message={
       Object {
         "_id": 4,
@@ -184,6 +165,6 @@ exports[`<ProgressBar /> should render the ProgressBar component  1`] = `
       "width": "66%",
     }
   }
-  value={30}
+  value={0}
 />
 `;

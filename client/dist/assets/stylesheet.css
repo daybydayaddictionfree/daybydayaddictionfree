@@ -93,9 +93,24 @@ h1 {
   padding: 125px;
   text-align: center;
 }
+.flex{
+  display: flex;
+  flex-direction: column;
+   padding:5px;
+}
+
+.space{
+  margin-top: 30px;
+}
+.space1 {
+  margin-top: 50px;
+}
 
 .btn-right {
   float: right;
+}
+.equalHM {
+  flex:1;
 }
 
 /*

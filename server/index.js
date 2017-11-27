@@ -1,6 +1,8 @@
 const cookiesMiddleWare = require('universal-cookie-express');
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
+const morgan = require('morgan');
 const parser = require('body-parser');
 let twilio = require('twilio');
 const { send, sendStatusToFriends, sendSmokerCheckins } = require('../twilio/index');
@@ -15,6 +17,8 @@ const db = require('../database/index.js');
 const port = process.env.PORT || 8080;
 const app = express();
 
+app.use(morgan('dev'));
+app.use(cors());
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -44,7 +48,7 @@ app.get('/verifyAuth', cookiesMiddleWare(), (req, res) => {
           });
 
       // If cookie is not valid..
-      } else {
+      }  else {
         res.send(false);
       }
     });

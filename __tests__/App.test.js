@@ -1,4 +1,3 @@
-import 'jest';
 import React from 'react';
 import { configure, mount, shallow } from 'enzyme';
 import 'raf/polyfill';

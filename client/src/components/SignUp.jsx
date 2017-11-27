@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -47,47 +48,78 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="sign-up-container">
-        <div>
-          <h2 className="sign-up-title">Sign up </h2>     
+        <Paper 
+          zDepth={2}
+        >
+        <div className="input-container">
+          <h2 className="sign-up-title">Sign up </h2>
+          <h4
+            style={{ margin: '0 0 -20px 10px' }}
+          >
+            Your Phone Number:
+          </h4><br />
           <TextField
-            hintText="Your Phone Number"
+            hintText="+1xxxxxxxxxx"
             onChange={this.userNum}
+            style={{ margin: '0 0 0 10px' }}
           /><br />
+          <h4
+            style={{ margin: '20px 0 -40px 10px' }}
+          >
+            Friend number one:
+          </h4><br />
           <TextField
             hintText="Name"
-            floatingLabelText="Friend #1 Name"
+            floatingLabelText="Name"
             onChange={this.Friend1}
+            style={{ margin: '0 0 0 10px' }}
           /><br />
           <TextField
-            hintText="Phone Number"
-            floatingLabelText="Friend #1 Phone number"
+            hintText="Phone number"
+            floatingLabelText="Phone number"
             onChange={this.Friend1Num}
+            style={{ margin: '0 0 0 10px' }}
           /><br />
+          <h4
+            style={{ margin: '20px 0 -40px 10px' }}
+          >
+            Friend number two:
+          </h4><br />
           <TextField
             hintText="Name"
-            floatingLabelText="Friend #2 Name"
+            floatingLabelText="Name"
             onChange={this.Friend2}
+            style={{ margin: '0 0 0 10px' }}
           /><br />
           <TextField
-            hintText="Phone Number"
-            floatingLabelText="Friend #2 Phone number"
+            hintText="Phone number"
+            floatingLabelText="Phone number"
             onChange={this.Friend2Num}
+            style={{ margin: '0 0 0 10px' }}
           /><br />
+          <h4
+            style={{ margin: '20px 0 -40px 10px' }}
+          >
+            Friend number three:
+          </h4><br />
           <TextField
             hintText="Name"
-            floatingLabelText="Friend #3 Name"
+            floatingLabelText="Name"
             onChange={this.Friend3}
+            style={{ margin: '0 0 0 10px' }}
           /><br />
           <TextField
-            hintText="Phone Number"
-            floatingLabelText="Friend #3 Phone number"
+            hintText="Phone number"
+            floatingLabelText="Phone number"
             onChange={this.Friend3Num}
+            style={{ margin: '0 0 0 10px' }}
           /><br />
           <div className="btn-box">
             <FlatButton
               label="Create account"
               backgroundColor="#3CB371"
               className="signupbtn"
+              style={{ margin: '0 0 10px 40px', color: 'white' }}
               disabled={!this.state.userNum || !this.state.Friend1 ||
               !this.state.Friend2 || !this.state.Friend3 || !this.state.Friend1Num ||
               !this.state.Friend2Num || !this.state.Friend3Num}
@@ -95,6 +127,7 @@ class SignUp extends React.Component {
             />
           </div>
         </div>
+        </Paper>
       </div>
     );
   }
